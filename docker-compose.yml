@@ -1,0 +1,36 @@
+web:
+  image: jacobom/lemp:web-php-5.6
+  restart: always
+  volumes:
+    - ./:/var/www
+  ports:
+    - "80"
+  expose:
+    - "80"
+  links:
+    - db
+  privileged: true
+  cpu_shares: 512
+  environment:
+    TZ: "America/Los_Angeles"
+    VIRTUAL_HOST: "test.docker"
+    NGINX_ERROR_LOG_LEVEL: "notice"
+    DB_CONNECTION: "mysql"
+    DB_HOST: "db"
+    DB_USERNAME: "root"
+    DB_PASSWORD: "root"
+    DB_DATABASE: "testing"
+    APP_ENV: "development"
+    GITHUB_API_TOKEN: ""
+    NGINX_PUBLIC_DIRECTORY: "dev"
+db:
+  restart: always
+  image: mariadb
+  ports:
+    - "3360"
+  expose:
+    - "3360"
+  environment:
+    TZ: "America/Los_Angeles"
+    MYSQL_ROOT_PASSWORD: "root"
+    MYSQL_DATABASE: "testing"

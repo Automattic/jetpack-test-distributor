@@ -1,0 +1,4 @@
+*.log
+/cron/
+/vendor/
+.DS_Store
