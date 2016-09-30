@@ -21,9 +21,15 @@ abstract class Test_Item {
 		$this->attributes = $this->clean_attributes( $attributes );
 	}
 
+	/**
+	 * Cleans the attributes from the database for consistent comparison
+	 *
+	 * @param  array $attributes Dirty attributes.
+	 * @return array Cleaned attributes
+	 */
 	protected function clean_attributes( $attributes = array() ) {
 		foreach ( $attributes as $key => $value ) {
-			if ( $value === '' ) {
+			if ( '' === $value ) {
 				$attributes[ $key ] = null;
 			}
 		}
