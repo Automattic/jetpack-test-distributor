@@ -3,7 +3,7 @@
 
 # Test Distributor
 
-Distributes human testable tests to Jetpack sites based on their environment. 
+Distributes human testable tests to Jetpack sites based on their environment.
 
 ## Trying it Out w/ Docker
 
