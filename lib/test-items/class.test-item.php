@@ -63,8 +63,7 @@ abstract class Test_Item {
 	 */
 	public function test_environment( $environment ) {
 		foreach ( $this->get_version_tests() as $test ) {
-			if ( isset( $environment[ $test['env_attr'] ] )
-				&& ! Semver_Helper::test_version( $environment[ $test['env_attr'] ], $this->attributes[ $test['min_attr'] ], $this->attributes[ $test['max_attr'] ] )
+			if ( ! Semver_Helper::test_version( $environment[ $test['env_attr'] ], $this->attributes[ $test['min_attr'] ], $this->attributes[ $test['max_attr'] ] )
 			) {
 				return false;
 			}
