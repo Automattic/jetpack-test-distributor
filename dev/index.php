@@ -31,7 +31,7 @@ function draw_select_list( $list, $name, $multiple = false ) {
 		if ( $value === $key ) {
 			$selected_str = ' selected="selected"';
 		}
-		echo '<option value="'. $key .'"'. $selected_str .'>'. $label .'</option>';
+		echo '<option value="' . $key . '"' . $selected_str . '>' . $label . '</option>';
 	}
 	echo '</select>';
 }
@@ -48,11 +48,17 @@ function draw_select_list( $list, $name, $multiple = false ) {
 		<div><label>Version</label> <input name="version" value="<?php echo isset( $_POST['version'] ) ? $_POST['version'] : ''; ?>" /></div>
 		<div><label>Host</label> <?php echo draw_select_list( $hosts, 'host' ); ?></div>
 		<div><label>Browser</label> <?php echo draw_select_list( $browsers, 'browser' ); ?></div>
-		<!-- <div><label>Module</label> <?php echo draw_select_list( $hosts ); ?></div> -->
+		<!-- <div><label>Module</label> <?php echo draw_select_list( $modules ); ?></div> -->
 		<input type="submit" name="submit" value="Submit" />
 	</form>
 <?php
-
+if ( ! empty( $_POST['site_id'] ) ) {
+	$environment = array();
+	$environment['version'] = isset( $_POST['version'] ) ? $_POST['version'] : null;
+	$environment['browser'] = isset( $_POST['browser'] ) ? $_POST['browser'] : null;
+	$environment['host'] = isset( $_POST['host'] ) ? $_POST['host'] : null;
+	dump( $test_distributor->get_tests( $_POST['site_id'], $environment ) );
+}
 ?>
 </body>
 </html>
