@@ -32,6 +32,14 @@ class Jetpack_Test_Item extends Test_Item {
 	 * {@inheritdoc}
 	 */
 	public function test_environment( $environment ) {
+		if ( isset( $this->attributes['host'] )
+			&& $environment['host'] !== $this->attributes['host'] ) {
+			return false;
+		}
+		if ( isset( $this->attributes['browser'] )
+			&& $environment['browser'] !== $this->attributes['browser'] ) {
+			return false;
+		}
 		if ( isset( $environment['jp_version'] )
 			&& ! $this->test_version( $environment['jp_version'], $this->attributes['min_jp_ver'], $this->attributes['max_jp_ver'] ) ) {
 			return false;
