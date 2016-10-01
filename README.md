@@ -1,5 +1,7 @@
 [![License](https://poser.pugx.org/automattic/jetpack/license.svg)](http://www.gnu.org/licenses/gpl-2.0.html)
 [![Build Status](https://travis-ci.org/jom/jetpack-test-distributor.svg)](https://travis-ci.org/jom/jetpack-test-distributor)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/jom/jetpack-test-distributor/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/jom/jetpack-test-distributor/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/jom/jetpack-test-distributor/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/jom/jetpack-test-distributor/?branch=master)
 
 # Test Distributor
 
