@@ -50,7 +50,11 @@ class PDO_Jetpack_Data_Source extends Data_Source {
 	public function get_completed_tests( $site_id ) {
 		$jtic_query = $this->pdo->prepare( 'SELECT `jtic`.`jetpack_test_item_id` FROM `jetpack_test_items_completed` `jtic` WHERE `jtic`.`site_id`=:site_id' );
 		$jtic_query->execute( array( ':site_id' => $site_id ) );
-		return $jtic_query->fetchColumn();
+		$tests = $jtic_query->fetchColumn();
+		if ( false === $tests ) {
+			$tests = array();
+		}
+		return $tests;
 	}
 
 	/**

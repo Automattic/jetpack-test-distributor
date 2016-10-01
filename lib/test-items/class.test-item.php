@@ -52,6 +52,14 @@ abstract class Test_Item {
 	}
 
 	/**
+	 * Tests the environment for a match with the test item
+	 *
+	 * @param  array $environment Current environment.
+	 * @return bool Test result
+	 */
+	abstract public function test_environment( $environment );
+
+	/**
 	 * Gets the unique identifier for the test item
 	 *
 	 * @return int

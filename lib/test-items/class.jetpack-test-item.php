@@ -30,6 +30,14 @@ class Jetpack_Test_Item extends Test_Item {
 
 	/**
 	 * {@inheritdoc}
+	 * @todo
+	 */
+	public function test_environment( $environment ) {
+		return true;
+	}
+
+	/**
+	 * {@inheritdoc}
 	 */
 	public function get_module() {
 		return $this->attributes['module'];
