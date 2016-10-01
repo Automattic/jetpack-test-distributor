@@ -79,7 +79,7 @@ class Semver_Helper {
 	 * @todo
 	 */
 	static public function is_major_release( $version ) {
-		$version = static::normalize_version( $version );
+		$version = static::normalize_version( $version, true );
 		return preg_match( '/^\d+\.0.0$/', $version ) === 1;
 	}
 }
