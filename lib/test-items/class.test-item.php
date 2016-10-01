@@ -42,13 +42,13 @@ abstract class Test_Item {
 	 * @return array
 	 */
 	public function get_package() {
-			return array(
-				'id'           => $this->get_id(),
-				'title'        => $this->get_title(),
-				'instructions' => $this->get_instructions(),
-				'module'       => $this->get_module(),
-				'initial_path' => $this->get_initial_path(),
-			);
+		return array(
+			'id'           => $this->get_id(),
+			'title'        => $this->get_title(),
+			'instructions' => $this->get_instructions(),
+			'module'       => $this->get_module(),
+			'initial_path' => $this->get_initial_path(),
+		);
 	}
 
 	/**

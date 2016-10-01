@@ -12,8 +12,8 @@ abstract class Data_Source {
 	 * @return Automattic\Human_Testable\Test_Items\Test_Item
 	 */
 	protected function prepare( $attributes ) {
-			$class_name = $this->get_test_item_class();
-			return new $class_name( $attributes );
+		$class_name = $this->get_test_item_class();
+		return new $class_name( $attributes );
 	}
 
 	/**
