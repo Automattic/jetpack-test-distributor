@@ -45,7 +45,9 @@ function draw_select_list( $list, $name, $multiple = false ) {
 <body>
 	<form method="post">
 		<div><label>Site ID</label> <input name="site_id" value="<?php echo isset( $_POST['site_id'] ) ? $_POST['site_id'] : '1'; ?>" /></div>
-		<div><label>Version</label> <input name="version" value="<?php echo isset( $_POST['version'] ) ? $_POST['version'] : ''; ?>" /></div>
+		<div><label>Jetpack Version</label> <input name="jp_version" value="<?php echo isset( $_POST['jp_version'] ) ? $_POST['jp_version'] : '4.1.0-beta1'; ?>" /></div>
+		<div><label>WordPress Version</label> <input name="wp_version" value="<?php echo isset( $_POST['wp_version'] ) ? $_POST['wp_version'] : '4.6.0'; ?>" /></div>
+		<div><label>PHP Version</label> <input name="php_version" value="<?php echo isset( $_POST['php_version'] ) ? $_POST['php_version'] : '5.6'; ?>" /></div>
 		<div><label>Host</label> <?php echo draw_select_list( $hosts, 'host' ); ?></div>
 		<div><label>Browser</label> <?php echo draw_select_list( $browsers, 'browser' ); ?></div>
 		<!-- <div><label>Module</label> <?php echo draw_select_list( $modules ); ?></div> -->
@@ -54,7 +56,9 @@ function draw_select_list( $list, $name, $multiple = false ) {
 <?php
 if ( ! empty( $_POST['site_id'] ) ) {
 	$environment = array();
-	$environment['version'] = isset( $_POST['version'] ) ? $_POST['version'] : null;
+	$environment['jp_version'] = isset( $_POST['jp_version'] ) ? $_POST['jp_version'] : '';
+	$environment['php_version'] = isset( $_POST['php_version'] ) ? $_POST['php_version'] : '';
+	$environment['wp_version'] = isset( $_POST['wp_version'] ) ? $_POST['wp_version'] : '';
 	$environment['browser'] = isset( $_POST['browser'] ) ? $_POST['browser'] : null;
 	$environment['host'] = isset( $_POST['host'] ) ? $_POST['host'] : null;
 	dump( $test_distributor->get_tests( $_POST['site_id'], $environment ) );

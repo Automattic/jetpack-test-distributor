@@ -30,9 +30,20 @@ class Jetpack_Test_Item extends Test_Item {
 
 	/**
 	 * {@inheritdoc}
-	 * @todo
 	 */
 	public function test_environment( $environment ) {
+		if ( isset( $environment['jp_version'] )
+			&& ! $this->test_version( $environment['jp_version'], $this->attributes['min_jp_ver'], $this->attributes['max_jp_ver'] ) ) {
+			return false;
+		}
+		if ( isset( $environment['wp_version'] )
+			&& ! $this->test_version( $environment['wp_version'], $this->attributes['min_wp_ver'], $this->attributes['max_wp_ver'] ) ) {
+			return false;
+		}
+		if ( isset( $environment['php_version'] )
+			&& ! $this->test_version( $environment['php_version'], $this->attributes['min_php_ver'], $this->attributes['max_php_ver'] ) ) {
+			return false;
+		}
 		return true;
 	}
 
@@ -41,48 +52,6 @@ class Jetpack_Test_Item extends Test_Item {
 	 */
 	public function get_module() {
 		return $this->attributes['module'];
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public function get_min_product_version() {
-		return $this->attributes['min_jp_ver'];
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public function get_max_product_version() {
-		return $this->attributes['max_jp_ver'];
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public function get_min_wordpress_version() {
-		return $this->attributes['min_wp_ver'];
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public function get_max_wordpress_version() {
-		return $this->attributes['max_wp_ver'];
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public function get_min_php_version() {
-		return $this->attributes['min_php_ver'];
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public function get_max_php_version() {
-		return $this->attributes['max_php_ver'];
 	}
 
 	/**

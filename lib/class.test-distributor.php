@@ -26,7 +26,7 @@ class Test_Distributor {
 			if ( in_array( $site_id, $completed_tests, true ) ) {
 				continue;
 			}
-			if ( ! $test_item->test_environment( $test_item ) ) {
+			if ( ! $test_item->test_environment( $environment ) ) {
 				continue;
 			}
 			$tests[ $test_id ] = $test_item->get_package();

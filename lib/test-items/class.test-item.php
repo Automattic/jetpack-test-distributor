@@ -52,6 +52,40 @@ abstract class Test_Item {
 	}
 
 	/**
+	 * Tests one version is between two other versions
+	 *
+	 * @param  string $client_version Version number to test for.
+	 * @param  string $min_version    Minimum version.
+	 * @param  string $max_version    Maximum version.
+	 * @return bool                   If $client_version hits or is between the min and max version
+	 */
+	protected function test_version( $client_version, $min_version, $max_version ) {
+		$client_version = $this->normalize_version( $client_version );
+		$min_version = $this->normalize_version( $min_version );
+		$max_version = $this->normalize_version( $max_version );
+		if ( isset( $min_version ) && version_compare( $client_version, $min_version, '<' ) ) {
+			return false;
+		}
+		if ( isset( $max_version ) && version_compare( $client_version, $max_version, '>' ) ) {
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * Normalize a version. Nulls invalid version numbers.
+	 *
+	 * @param  string $version Version to normalize.
+	 * @return string          Normalized version.
+	 */
+	protected function normalize_version( $version ) {
+		if ( isset( $version ) &&  preg_match( '/^\d+\.\d+/', $version ) !== 1 ) {
+			return null;
+		}
+		return $version;
+	}
+
+	/**
 	 * Tests the environment for a match with the test item
 	 *
 	 * @param  array $environment Current environment.
@@ -86,48 +120,6 @@ abstract class Test_Item {
 	 * @return string
 	 */
 	abstract public function get_module();
-
-	/**
-	 * Gets the minimum product version that should be tested against this item
-	 *
-	 * @return string
-	 */
-	abstract public function get_min_product_version();
-
-	/**
-	 * Gets the maximum product version that should be tested against this item
-	 *
-	 * @return string
-	 */
-	abstract public function get_max_product_version();
-
-	/**
-	 * Gets the minimum WordPress version that should be tested with this item
-	 *
-	 * @return string
-	 */
-	abstract public function get_min_wordpress_version();
-
-	/**
-	 * Gets the maximum WordPress version that should be tested with this item
-	 *
-	 * @return string
-	 */
-	abstract public function get_max_wordpress_version();
-
-	/**
-	 * Gets the minimum PHP version that should be tested with this item
-	 *
-	 * @return string
-	 */
-	abstract public function get_min_php_version();
-
-	/**
-	 * Gets the maximum PHP version that should be tested with this item
-	 *
-	 * @return string
-	 */
-	abstract public function get_max_php_version();
 
 	/**
 	 * Gets the importance for this test item
