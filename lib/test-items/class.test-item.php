@@ -146,6 +146,7 @@ abstract class Test_Item {
 	 * 		),
 	 * 	)
 	 * ```
+	 *
 	 * @return array
 	 */
 	abstract public function get_version_tests();

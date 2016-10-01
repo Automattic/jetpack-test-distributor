@@ -2,6 +2,9 @@
 namespace Automattic\Human_Testable\Test_Items;
 
 require_once( __DIR__ . DIRECTORY_SEPARATOR . 'class.test-item.php' );
+require_once( dirname( __DIR__ ) . DIRECTORY_SEPARATOR . 'utils' . DIRECTORY_SEPARATOR . 'class.semver-helper.php' );
+
+use Automattic\Human_Testable\Utils\Semver_Helper;
 
 /**
  * Class for a Jetpack test item
@@ -58,6 +61,9 @@ class Jetpack_Test_Item extends Test_Item {
 		if ( ! parent::test_environment( $environment ) ) {
 			return false;
 		}
+		if ( isset( $environment['jp_version'] ) && ! $this->test_importance( $environment ) ) {
+			return false;
+		}
 		if ( isset( $this->attributes['host'] )
 			&& $environment['host'] !== $this->attributes['host'] ) {
 			return false;
@@ -66,6 +72,37 @@ class Jetpack_Test_Item extends Test_Item {
 			&& $environment['browser'] !== $this->attributes['browser'] ) {
 			return false;
 		}
+		return true;
+	}
+
+	/**
+	 * Check if a test item should be returned based on its importance
+	 *
+	 * @param  array $environment Current environment.
+	 * @return bool               Test result.
+	 */
+	protected function test_importance( $environment ) {
+		if ( ! isset( $this->attributes['priority'] ) || 10 === $this->attributes['priority'] ) {
+			return true;
+		}
+		if ( $this->did_module_change( $environment ) ) {
+			return true;
+		}
+		if ( 5 === $this->attributes['importance']
+					&& Semver_Helper::is_major_release( $environment['jp_version'] ) ) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Check if a module changed in a version release
+	 *
+	 * @param  array $environment Current environment.
+	 * @return bool               Test result.
+	 * @todo
+	 */
+	protected function did_module_change( $environment ) {
 		return true;
 	}
 

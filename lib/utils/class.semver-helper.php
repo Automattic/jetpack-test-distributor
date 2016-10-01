@@ -45,4 +45,15 @@ class Semver_Helper {
 		}
 		return $version;
 	}
+
+	/**
+	 * Tests is a version is a major version release
+	 *
+	 * @param  string  $version Version to test.
+	 * @return boolean          Result of the test.
+	 * @todo
+	 */
+	static public function is_major_release( $version ) {
+		return true;
+	}
 }
