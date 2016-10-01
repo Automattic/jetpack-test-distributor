@@ -8,6 +8,11 @@ use Automattic\Human_Testable\Data_Sources\Data_Source;
 class Test_Distributor {
 	private $data_source;
 
+	/**
+	 * Constructor.
+	 *
+	 * @param Data_Source $data_source Data source object.
+	 */
 	public function __construct( Data_Source $data_source ) {
 		$this->data_source = $data_source;
 	}
@@ -21,6 +26,7 @@ class Test_Distributor {
 	 */
 	public function get_tests( $site_id, $environment = array() ) {
 		$tests = array();
+		$environment = $this->fill_environment( $environment );
 		$completed_tests = $this->data_source->get_completed_tests( $site_id );
 		foreach ( $this->data_source->get_tests() as $test_id => $test_item ) {
 			if ( in_array( $site_id, $completed_tests, true ) ) {
@@ -32,5 +38,23 @@ class Test_Distributor {
 			$tests[ $test_id ] = $test_item->get_package();
 		}
 		return $tests;
+	}
+
+	/**
+	 * Fill environment array for incomplete environment passes
+	 *
+	 * @param  array $environment Passed environment.
+	 * @return array
+	 */
+	protected function fill_environment( $environment ) {
+		return array_merge(
+			array(
+				'browser' => null,
+				'host' => null,
+				'jp_version' => null,
+				'wp_version' => null,
+				'php_version' => null,
+			), $environment
+		);
 	}
 }
