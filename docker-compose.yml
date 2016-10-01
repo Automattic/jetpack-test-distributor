@@ -23,6 +23,21 @@ web:
     APP_ENV: "development"
     GITHUB_API_TOKEN: ""
     NGINX_PUBLIC_DIRECTORY: "dev"
+myadmin:
+  restart: always
+  image: phpmyadmin/phpmyadmin
+  links:
+    - db
+  ports:
+    - "80"
+  expose:
+    - "80"
+  environment:
+    TZ: "America/Los_Angeles"
+    VIRTUAL_HOST: "test-db.docker"
+    PMA_USER: "root"
+    PMA_PASSWORD: "root"
+    PMA_HOST: "db"
 db:
   restart: always
   image: mariadb
