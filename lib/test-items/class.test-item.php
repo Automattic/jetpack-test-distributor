@@ -65,7 +65,7 @@ abstract class Test_Item {
 		$max_version = $this->normalize_version( $max_version );
 
 		if ( ! isset( $client_version ) ) {
-			if ( isset ( $max_version ) ) {
+			if ( isset( $max_version ) ) {
 				return false;
 			}
 			return true;
