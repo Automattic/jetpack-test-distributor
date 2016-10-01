@@ -63,6 +63,13 @@ abstract class Test_Item {
 		$client_version = $this->normalize_version( $client_version );
 		$min_version = $this->normalize_version( $min_version );
 		$max_version = $this->normalize_version( $max_version );
+
+		if ( ! isset( $client_version ) ) {
+			if ( isset ( $max_version ) ) {
+				return false;
+			}
+			return true;
+		}
 		if ( isset( $min_version ) && version_compare( $client_version, $min_version, '<' ) ) {
 			return false;
 		}
