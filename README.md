@@ -1,3 +1,6 @@
+[![License](https://poser.pugx.org/automattic/jetpack/license.svg)](http://www.gnu.org/licenses/gpl-2.0.html)
+[![Build Status](https://travis-ci.org/jom/jetpack-test-distributor.svg)](https://travis-ci.org/jom/jetpack-test-distributor)
+
 # Test Distributor
 
 Distributes human testable tests to Jetpack sites based on their environment. 
