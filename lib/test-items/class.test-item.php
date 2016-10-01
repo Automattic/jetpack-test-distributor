@@ -1,6 +1,10 @@
 <?php
 namespace Automattic\Human_Testable\Test_Items;
 
+require_once( dirname( __DIR__ ) . DIRECTORY_SEPARATOR . 'utils' . DIRECTORY_SEPARATOR . 'class.semver-helper.php' );
+
+use Automattic\Human_Testable\Utils\Semver_Helper;
+
 /**
  * Abstract class for a test item
  */
@@ -57,7 +61,16 @@ abstract class Test_Item {
 	 * @param  array $environment Current environment.
 	 * @return bool Test result
 	 */
-	abstract public function test_environment( $environment );
+	public function test_environment( $environment ) {
+		foreach ( $this->get_version_tests() as $test ) {
+			if ( isset( $environment[ $test['env_attr'] ] )
+				&& ! Semver_Helper::test_version( $environment[ $test['env_attr'] ], $this->attributes[ $test['min_attr'] ], $this->attributes[ $test['max_attr'] ] )
+			) {
+				return false;
+			}
+		}
+		return true;
+	}
 
 	/**
 	 * Gets the unique identifier for the test item
@@ -114,4 +127,26 @@ abstract class Test_Item {
 	 * @return string
 	 */
 	abstract public function get_initial_path();
+
+
+	/**
+	 * Gets the version tests
+	 * Example:
+	 * ```
+	 * 	array(
+	 * 		array(
+	 * 			'env_attr' => 'jp_version',
+	 * 			'min_attr' => 'min_jp_ver',
+	 * 			'max_attr' => 'max_jp_ver',
+	 * 		),
+	 * 		array(
+	 * 			'env_attr' => 'wp_version',
+	 * 			'min_attr' => 'min_wp_ver',
+	 * 			'max_attr' => 'max_wp_ver',
+	 * 		),
+	 * 	)
+	 * ```
+	 * @return array
+	 */
+	abstract public function get_version_tests();
 }

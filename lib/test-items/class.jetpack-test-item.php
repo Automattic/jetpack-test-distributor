@@ -2,9 +2,6 @@
 namespace Automattic\Human_Testable\Test_Items;
 
 require_once( __DIR__ . DIRECTORY_SEPARATOR . 'class.test-item.php' );
-require_once( dirname( __DIR__ ) . DIRECTORY_SEPARATOR . 'utils' . DIRECTORY_SEPARATOR . 'class.semver-helper.php' );
-
-use Automattic\Human_Testable\Utils\Semver_Helper;
 
 /**
  * Class for a Jetpack test item
@@ -34,7 +31,33 @@ class Jetpack_Test_Item extends Test_Item {
 	/**
 	 * {@inheritdoc}
 	 */
+	public function get_version_tests() {
+		return array(
+			array(
+				'env_attr' => 'jp_version',
+				'min_attr' => 'min_jp_ver',
+				'max_attr' => 'max_jp_ver',
+			),
+			array(
+				'env_attr' => 'wp_version',
+				'min_attr' => 'min_wp_ver',
+				'max_attr' => 'max_wp_ver',
+			),
+			array(
+				'env_attr' => 'php_version',
+				'min_attr' => 'min_php_ver',
+				'max_attr' => 'max_php_ver',
+			),
+		);
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
 	public function test_environment( $environment ) {
+		if ( ! parent::test_environment( $environment ) ) {
+			return false;
+		}
 		if ( isset( $this->attributes['host'] )
 			&& $environment['host'] !== $this->attributes['host'] ) {
 			return false;
@@ -43,19 +66,18 @@ class Jetpack_Test_Item extends Test_Item {
 			&& $environment['browser'] !== $this->attributes['browser'] ) {
 			return false;
 		}
-		if ( isset( $environment['jp_version'] )
-			&& ! Semver_Helper::test_version( $environment['jp_version'], $this->attributes['min_jp_ver'], $this->attributes['max_jp_ver'] ) ) {
-			return false;
-		}
-		if ( isset( $environment['wp_version'] )
-			&& ! Semver_Helper::test_version( $environment['wp_version'], $this->attributes['min_wp_ver'], $this->attributes['max_wp_ver'] ) ) {
-			return false;
-		}
-		if ( isset( $environment['php_version'] )
-			&& ! Semver_Helper::test_version( $environment['php_version'], $this->attributes['min_php_ver'], $this->attributes['max_php_ver'] ) ) {
-			return false;
-		}
 		return true;
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	protected function clean_attributes( $attributes = array() ) {
+		$attributes = parent::clean_attributes( $attributes );
+		$attributes['jetpack_test_item_id'] = (int) $attributes['jetpack_test_item_id'];
+		$attributes['active'] = (int) $attributes['active'];
+		$attributes['importance'] = (int) $attributes['importance'];
+		return $attributes;
 	}
 
 	/**
