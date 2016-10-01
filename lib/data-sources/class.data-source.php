@@ -8,12 +8,12 @@ abstract class Data_Source {
 	/**
 	 * Prepares a test item object with an array of attributes from the database
 	 *
-	 * @param  array $attributes List of attributes to use in new object
+	 * @param  array $attributes List of attributes to use in new object.
 	 * @return Automattic\Human_Testable\Test_Items\Test_Item
 	 */
 	protected function prepare( $attributes ) {
-			$className = $this->get_test_item_class();
-			return new $className( $attributes );
+			$class_name = $this->get_test_item_class();
+			return new $class_name( $attributes );
 	}
 
 	/**
@@ -34,8 +34,9 @@ abstract class Data_Source {
 	/**
 	 * Marks a test as being completed or skipped for a site ID
 	 *
-	 * @param int $site_id ID of the site requesting tests.
-	 * @param int $test_id ID of the test that was completed or skipped
+	 * @param int  $site_id ID of the site requesting tests.
+	 * @param int  $test_id ID of the test that was completed or skipped.
+	 * @param bool $skipped	Flag for if the user skipped the test.
 	 * @return boolean Success result.
 	 */
 	abstract public function save_completed_test( $site_id, $test_id, $skipped = false );
