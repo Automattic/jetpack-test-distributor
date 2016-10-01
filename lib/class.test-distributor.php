@@ -33,6 +33,4 @@ class Test_Distributor {
 		}
 		return $tests;
 	}
-
-	
 }
