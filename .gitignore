@@ -2,3 +2,4 @@
 /cron/
 /vendor/
 .DS_Store
+phpunit.xml

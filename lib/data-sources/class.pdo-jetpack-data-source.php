@@ -8,7 +8,7 @@ use PDO;
 use Automattic\Human_Testable\Test_Items\Jetpack_Test_Item;
 
 /**
- * Abstract class for a data source
+ * Jetpack PDO class for a data source
  */
 class PDO_Jetpack_Data_Source extends Data_Source {
 	/**
