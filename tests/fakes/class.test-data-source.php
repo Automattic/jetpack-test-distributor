@@ -52,10 +52,10 @@ class Test_Data_Source extends Data_Source {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function get_completed_tests( $site_id ) {
+	public function get_completed_tests( $site_id, $environment_hash ) {
 		$tests = [];
 		foreach ( $this->memory_tables['jetpack_test_items_completed'] as $item ) {
-			if ( $site_id === $item['site_id'] ) {
+			if ( $site_id === $item['site_id'] && $environment_hash === $item['environment'] ) {
 				$tests[] = $item['jetpack_test_item_id'];
 			}
 		}
@@ -65,15 +65,11 @@ class Test_Data_Source extends Data_Source {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function save_completed_test( $site_id, $test_id, $skipped = false ) {
-		if ( true === $skipped ) {
-			$skipped = 1;
-		} else {
-			$skipped = 0;
-		}
+	public function save_completed_test( $site_id, $test_id, $environment_hash ) {
 		$this->memory_tables['jetpack_test_items_completed'][] = array(
 			'site_id' => $site_id,
 			'jetpack_test_item_id' => $test_id,
+			'environment' => $environment_hash
 		);
 		return true;
 	}

@@ -3,7 +3,6 @@ namespace Automattic_Unit\Human_Testable;
 
 require_once( __DIR__ . DIRECTORY_SEPARATOR . 'test_class.base_test.php' );
 require_once( TESTED_LIBRARY_PATH . DIRECTORY_SEPARATOR . 'class.test-distributor.php' );
-
 use Automattic\Human_Testable\Test_Distributor;
 
 class Test_Test_Distributor extends Base_Test {

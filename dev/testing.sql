@@ -82,7 +82,7 @@ INSERT INTO `jetpack_test_items` (`jetpack_test_item_id`, `active`, `date_added`
 CREATE TABLE `jetpack_test_items_completed` (
   `jetpack_test_item_id` int(11) NOT NULL,
   `site_id` int(11) NOT NULL,
-  `skipped` tinyint(1) NOT NULL,
+  `environment` varchar(40) NOT NULL,
   `date_added` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -124,7 +124,7 @@ ALTER TABLE `jetpack_test_items`
 -- Indexes for table `jetpack_test_items_completed`
 --
 ALTER TABLE `jetpack_test_items_completed`
-  ADD PRIMARY KEY (`jetpack_test_item_id`,`site_id`);
+  ADD PRIMARY KEY (`jetpack_test_item_id`,`site_id`,`environment`);
 
 --
 -- Indexes for table `jetpack_versions`

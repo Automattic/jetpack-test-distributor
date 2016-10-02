@@ -64,9 +64,9 @@ class PDO_Jetpack_Data_Source extends Data_Source {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function get_completed_tests( $site_id ) {
-		$jtic_query = $this->pdo->prepare( 'SELECT `jtic`.`jetpack_test_item_id` FROM `jetpack_test_items_completed` `jtic` WHERE `jtic`.`site_id`=:site_id' );
-		$jtic_query->execute( array( ':site_id' => $site_id ) );
+	public function get_completed_tests( $site_id, $environment_hash ) {
+		$jtic_query = $this->pdo->prepare( 'SELECT `jtic`.`jetpack_test_item_id` FROM `jetpack_test_items_completed` `jtic` WHERE `jtic`.`site_id`=:site_id AND `jtic`.`environment`=:environment' );
+		$jtic_query->execute( array( ':site_id' => $site_id, ':environment' => $environment_hash ) );
 		$tests = $jtic_query->fetchColumn();
 		if ( false === $tests ) {
 			$tests = array();
@@ -77,15 +77,10 @@ class PDO_Jetpack_Data_Source extends Data_Source {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function save_completed_test( $site_id, $test_id, $skipped = false ) {
-		if ( true === $skipped ) {
-			$skipped = 1;
-		} else {
-			$skipped = 0;
-		}
-		$insert_sql = 'INSERT INTO `jetpack_test_items_completed` (`site_id`, `jetpack_test_item_id`, `skipped`) VALUES (:site_id, :jetpack_test_item_id, :skipped)';
+	public function save_completed_test( $site_id, $test_id, $environment_hash ) {
+		$insert_sql = 'INSERT INTO `jetpack_test_items_completed` (`site_id`, `jetpack_test_item_id`, `environment`) VALUES (:site_id, :jetpack_test_item_id, :environment)';
 		$jtic_insert_query = $this->pdo->prepare( $insert_sql );
-		return $jtic_insert_query->execute( array( ':site_id' => $site_id, ':jetpack_test_item_id' => $test_id, ':skipped' => $skipped ) );
+		return $jtic_insert_query->execute( array( ':site_id' => $site_id, ':jetpack_test_item_id' => $test_id, ':environment' => $environment_hash ) );
 	}
 
 	/**
