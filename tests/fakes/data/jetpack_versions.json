@@ -1,0 +1,9 @@
+[{
+    "jetpack_version_id": "1",
+    "version": "4.6.0",
+    "touched_modules": "[\"carousel\", \"comments\", \"publicize\"]"
+}, {
+    "jetpack_version_id": "2",
+    "version": "4.5.9",
+    "touched_modules": "[\"sso\"]"
+}]

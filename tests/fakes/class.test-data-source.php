@@ -19,7 +19,7 @@ class Test_Data_Source extends Data_Source {
 	 * Constructor
 	 */
 	public function __construct() {
-		$tables = array( 'jetpack_test_items_completed', 'jetpack_test_items' );
+		$tables = array( 'jetpack_test_items_completed', 'jetpack_test_items', 'jetpack_versions' );
 		foreach ( $tables as $table ) {
 			$this->memory_tables[ $table ] = array();
 			$data_path = FAKE_DATA_DIR . DIRECTORY_SEPARATOR . $table . '.json';
@@ -39,6 +39,14 @@ class Test_Data_Source extends Data_Source {
 			$tests[ $test_item->get_id() ] = $test_item;
 		}
 		return $tests;
+	}
+
+	public function get_version_modules() {
+		$versions = array();
+		foreach ( $this->memory_tables['jetpack_versions'] as $row ) {
+			$versions[ $row['version'] ] = json_decode( $row['touched_modules'], true );
+		}
+		return $versions;
 	}
 
 	/**

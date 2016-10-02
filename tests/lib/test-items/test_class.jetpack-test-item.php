@@ -48,6 +48,25 @@ class Test_Jetpack_Test_Item extends Base_Test {
 		$this->assertEquals( $item->get_initial_path(), '/sasquatch' );
 	}
 
+	public function test_did_module_change() {
+		$item = $this->get_jetpack_test_item( array( 'importance' => 5, 'module' =>  'comments' ) );
+		$this->assertTrue( $item->test_environment( $this->fill_environment( array( 'jp_version' => '4.6.0' ) ) ) );
+		$this->assertFalse( $item->test_environment( $this->fill_environment( array( 'jp_version' => '4.5.9' ) ) ) );
+		$this->assertFalse( $item->test_environment( $this->fill_environment( array( 'jp_version' => '4.5.8' ) ) ) );
+	}
+
+	protected function fill_environment( $environment ) {
+		return array_merge(
+			array(
+				'browser' => null,
+				'host' => null,
+				'jp_version' => null,
+				'wp_version' => null,
+				'php_version' => null,
+			), $environment
+		);
+	}
+
 	protected function get_fake_attributes( $attr = array() ) {
 		return array_merge( array(
 			'jetpack_test_item_id' => '1',
@@ -64,13 +83,13 @@ class Test_Jetpack_Test_Item extends Base_Test {
 			'max_php_ver' => '',
 			'module' => 'publicize',
 			'host' => '',
-			'browser' => 'ie',
+			'browser' => '',
 			'initial_path' => '/wp-admin/options-general.php?page=sharing',
 			'added_by' => 'samhotchkiss',
 		), $attr );
 	}
 	protected function get_jetpack_test_item( $attr = null ) {
 		$attr = $this->get_fake_attributes( $attr );
-		return new Jetpack_Test_Item( $attr );
+		return new Jetpack_Test_Item( $this->get_test_data_source(), $attr );
 	}
 }

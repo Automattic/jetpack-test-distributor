@@ -59,6 +59,15 @@ class Test_PDO_Jetpack_Data_Source extends Base_Test {
 					  `date_added` datetime DEFAULT NULL
 					);"
 		);
+		$pdo->exec( "CREATE TABLE `jetpack_versions` (
+			  `jetpack_version_id` int(11) NOT NULL,
+			  `version` varchar(15) NOT NULL,
+			  `touched_modules` text NOT NULL
+			);"
+		);
+		$pdo->exec( "INSERT INTO `jetpack_versions` (`jetpack_version_id`, `version`, `touched_modules`) VALUES
+		(1, '4.6.0', '[\"carousel\", \"comments\", \"publicize\"]'),
+		(2, '4.5.9', '[\"shortcodes\", \"sso\"]');" );
 		$pdo->exec( 'INSERT INTO `jetpack_test_items` (`jetpack_test_item_id`, `title`, `active`) VALUES (1, "Dogs are the best", 1)' );
 		$pdo->exec( 'INSERT INTO `jetpack_test_items` (`jetpack_test_item_id`, `title`, `active`) VALUES (2, "Woops", 0)' );
 		$pdo->exec( 'INSERT INTO `jetpack_test_items_completed` (`jetpack_test_item_id`, `site_id`, `skipped`) VALUES (1, 100, 1)' );
