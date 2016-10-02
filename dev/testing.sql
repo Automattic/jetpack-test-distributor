@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db
--- Generation Time: Sep 30, 2016 at 05:28 PM
+-- Generation Time: Oct 02, 2016 at 12:27 AM
 -- Server version: 10.1.17-MariaDB-1~jessie
 -- PHP Version: 5.6.26
 
@@ -53,7 +53,7 @@ CREATE TABLE `jetpack_test_items` (
 INSERT INTO `jetpack_test_items` (`jetpack_test_item_id`, `active`, `date_added`, `importance`, `title`, `instructions`, `min_jp_ver`, `max_jp_ver`, `min_wp_ver`, `max_wp_ver`, `min_php_ver`, `max_php_ver`, `module`, `host`, `browser`, `initial_path`, `added_by`) VALUES
 (4, 1, '2016-07-19 10:33:10', 10, 'Publicize to Facebook', '1. Ensure that you have a connected Facebook account\r\n2. Publish a new post (with an image)\r\n3. Ensure that the post was published to your Facebook feed', '', '', '', '', '', '', 'publicize', '', '', '/wp-admin/options-general.php?page=sharing', 'samhotchkiss'),
 (5, 1, '2016-07-19 10:51:58', 10, 'Publicize to Twitter', '1. Ensure that you have a connected Twitter account\r\n2. Publish a new post\r\n3. Ensure that the post was published to your Twitter account', '', '', '', '', '', '', 'publicize', '', '', '/wp-admin/options-general.php?page=sharing', 'samhotchkiss'),
-(6, 1, '2016-07-19 18:45:31', 1, 'Publish a full post', '1. Go to Posts > Add New in your dashboard.\r\n2. Write a long post, with text and images\r\n3. Hit Publish.\r\n4. The post should be sent to all Jetpack subscribers for that site.', '', '', '', '', '', '', 'subscriptions', '', '', NULL, 'jeherve'),
+(6, 1, '2016-07-19 18:45:31', 1, 'Publish a full post', '1. Go to Posts > Add New in your dashboard.\r\n2. Write a long post, with text and images\r\n3. Hit Publish.\r\n4. The post should be sent to all Jetpack subscribers for that site.', '', '', '', '', '5.4', '7.1', 'subscriptions', '', '', NULL, 'jeherve'),
 (7, 1, '2016-07-19 18:46:18', 1, 'Subscriptions: Schedule a post', '1. Go to Posts > Add New in your dashboard.\r\n2. Write a long post, with text and images.\r\n3. Schedule the post to be published later.\r\n4. When the post gets published, it should be sent to all Jetpack subscribers for that site.', '', '', '', '', '', '', 'subscriptions', '', '', NULL, 'jeherve'),
 (8, 1, '2016-07-19 18:47:15', 1, 'Publish a post including a Read More tag', '1. Go to Posts > Add New in your dashboard.\r\n2. Write a long post, with text and images.\r\n3. Add a Read More tag in the middle of your post.\r\n4. Hit Publish.\r\n5. The post should be sent to all Jetpack subscribers for that site, and should only include the content above the Read more tag.', '', '', '', '', '', '', 'subscriptions', '', '', NULL, 'jeherve'),
 (9, 1, '2016-07-19 18:48:02', 1, 'Publish a post with feed settings set to Full', '0. In Settings > Reading, set your Feed settings to Full.\r\n1. Go to Posts > Add New in your dashboard.\r\n2. Write a long post, with text and images.\r\n3. Hit Publish.\r\n4. The post should be sent to all Jetpack subscribers for that site. The whole post content should be sent to subscribers.', '', '', '', '', '', '', 'subscriptions', '', '', NULL, 'jeherve'),
@@ -86,6 +86,26 @@ CREATE TABLE `jetpack_test_items_completed` (
   `date_added` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jetpack_versions`
+--
+
+CREATE TABLE `jetpack_versions` (
+  `jetpack_version_id` int(11) NOT NULL,
+  `version` varchar(15) NOT NULL,
+  `touched_modules` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `jetpack_versions`
+--
+
+INSERT INTO `jetpack_versions` (`jetpack_version_id`, `version`, `touched_modules`) VALUES
+(1, '4.6.0', '["carousel", "comments", "publicize"]'),
+(2, '4.5.9', '["shortcodes", "sso"]');
+
 --
 -- Indexes for dumped tables
 --
@@ -107,6 +127,12 @@ ALTER TABLE `jetpack_test_items_completed`
   ADD PRIMARY KEY (`jetpack_test_item_id`,`site_id`);
 
 --
+-- Indexes for table `jetpack_versions`
+--
+ALTER TABLE `jetpack_versions`
+  ADD PRIMARY KEY (`jetpack_version_id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -115,6 +141,11 @@ ALTER TABLE `jetpack_test_items_completed`
 --
 ALTER TABLE `jetpack_test_items`
   MODIFY `jetpack_test_item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+--
+-- AUTO_INCREMENT for table `jetpack_versions`
+--
+ALTER TABLE `jetpack_versions`
+  MODIFY `jetpack_version_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

@@ -2,7 +2,9 @@
 namespace Automattic\Human_Testable\Test_Items;
 
 require_once( dirname( __DIR__ ) . DIRECTORY_SEPARATOR . 'utils' . DIRECTORY_SEPARATOR . 'class.semver-helper.php' );
+require_once( dirname( __DIR__ ) . DIRECTORY_SEPARATOR . 'data-sources' . DIRECTORY_SEPARATOR . 'class.data-source.php' );
 
+use Automattic\Human_Testable\Data_Sources\Data_Source;
 use Automattic\Human_Testable\Utils\Semver_Helper;
 
 /**
@@ -17,11 +19,19 @@ abstract class Test_Item {
 	protected $attributes;
 
 	/**
+	 * Data source that this object originated from
+	 *
+	 * @var Data_Source
+	 */
+	protected $data_source;
+
+	/**
 	 * Constructor
 	 *
 	 * @param array $attributes List of attributes for item.
 	 */
-	public function __construct( $attributes = array() ) {
+	public function __construct( Data_Source $data_source, $attributes = array() ) {
+		$this->data_source = $data_source;
 		$this->attributes = $this->clean_attributes( $attributes );
 	}
 

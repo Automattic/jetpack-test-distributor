@@ -82,7 +82,7 @@ class Jetpack_Test_Item extends Test_Item {
 	 * @return bool               Test result.
 	 */
 	protected function test_importance( $environment ) {
-		if ( ! isset( $this->attributes['priority'] ) || 10 === $this->attributes['priority'] ) {
+		if ( ! isset( $this->attributes['importance'] ) || 10 === $this->attributes['importance'] ) {
 			return true;
 		}
 		if ( $this->did_module_change( $environment ) ) {
@@ -103,6 +103,16 @@ class Jetpack_Test_Item extends Test_Item {
 	 * @todo
 	 */
 	protected function did_module_change( $environment ) {
+		$version_modules = $this->data_source->get_version_modules();
+		$module = $this->get_module();
+		$version = Semver_Helper::normalize_version( $environment['jp_version'], true );
+		if ( ! isset( $version )
+				|| ! isset( $module )
+				|| ! isset( $version_modules[ $version ] )
+				|| ! in_array( $module, $version_modules[ $version ] )
+		) {
+			return false;
+		}
 		return true;
 	}
 

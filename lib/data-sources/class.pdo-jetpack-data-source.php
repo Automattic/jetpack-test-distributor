@@ -30,6 +30,23 @@ class PDO_Jetpack_Data_Source extends Data_Source {
 		$this->pdo = new PDO( $dsn, $username, $password, $options );
 	}
 
+	public function get_version_modules() {
+		static $version_modules;
+		if ( ! isset( $version_modules ) ) {
+			$version_modules = $this->load_version_modules();
+		}
+		return $version_modules;
+	}
+
+	public function load_version_modules() {
+		$jti_query = $this->pdo->prepare( 'SELECT `jv`.* FROM `jetpack_versions` `jv`' );
+		$jti_query->execute();
+		$versions = array();
+		while ( $row = $jti_query->fetch( PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT ) ) {
+			$versions[ $row['version'] ] = json_decode( $row['touched_modules'], true );
+		}
+		return $versions;
+	}
 	/**
 	 * {@inheritdoc}
 	 */

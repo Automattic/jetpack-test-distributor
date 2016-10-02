@@ -13,7 +13,7 @@ abstract class Data_Source {
 	 */
 	protected function prepare( $attributes ) {
 		$class_name = $this->get_test_item_class();
-		return new $class_name( $attributes );
+		return new $class_name( $this, $attributes );
 	}
 
 	/**
