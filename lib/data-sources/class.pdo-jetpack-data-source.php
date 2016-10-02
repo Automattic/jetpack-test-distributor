@@ -66,7 +66,7 @@ class PDO_Jetpack_Data_Source extends Data_Source {
 		} else {
 			$skipped = 0;
 		}
-		$insert_sql = 'INSERT INTO `jetpack_test_items_completed` SET `site_id`=:site_id, `jetpack_test_item_id`=:jetpack_test_item_id, `skipped`=:skipped';
+		$insert_sql = 'INSERT INTO `jetpack_test_items_completed` (`site_id`, `jetpack_test_item_id`, `skipped`) VALUES (:site_id, :jetpack_test_item_id, :skipped)';
 		$jtic_insert_query = $this->pdo->prepare( $insert_sql );
 		return $jtic_insert_query->execute( array( ':site_id' => $site_id, ':jetpack_test_item_id' => $test_id, ':skipped' => $skipped ) );
 	}
