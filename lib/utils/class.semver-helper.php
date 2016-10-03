@@ -62,10 +62,10 @@ class Semver_Helper {
 	 */
 	static public function expand_version_number( $version ) {
 		$version_parts = explode( '.', $version );
-		if ( ! isset( $version_parts[1] ) ) {
+		if ( empty( $version_parts[1] ) ) {
 			$version_parts[1] = 0;
 		}
-		if ( ! isset( $version_parts[2] ) ) {
+		if ( empty( $version_parts[2] ) ) {
 			$version_parts[2] = 0;
 		}
 		return implode( '.', $version_parts );
