@@ -24,13 +24,13 @@ class Environment implements \ArrayAccess {
 	 * @return string Hash of the environment.
 	 */
 	 public function get_hash() {
-		 $env = [
+		 $env = array(
 			'browser' => $this['browser'],
 			'host' => $this['host'],
 			'jp_version' => $this['jp_version'],
 			'wp_version' => $this['wp_version'],
 			'php_version' => $this['php_version'],
-		 ];
+		);
 
 		 return sha1( json_encode( $env ) );
 	 }
