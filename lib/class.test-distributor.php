@@ -32,7 +32,7 @@ class Test_Distributor {
 	 */
 	public function get_tests( $site_id, $environment = array() ) {
 		$tests = array();
-		$environment = new Environment( $environment );
+		$environment = new Environment( $this->data_source->get_environment_attributes(), $environment );
 		$completed_tests = $this->data_source->get_completed_tests( $site_id, $environment->get_hash() );
 		foreach ( $this->data_source->get_tests() as $test_id => $test_item ) {
 			if ( in_array( $site_id, $completed_tests, true ) ) {

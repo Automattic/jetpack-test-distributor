@@ -10,11 +10,20 @@ class Environment implements \ArrayAccess {
 	private $attributes = array();
 
 	/**
+	 * Data Source Attribute names
+	 *
+	 * @var array
+	 */
+	 private $attribute_names = array();
+
+	/**
 	 * Constructor.
 	 *
-	 * @param array $attributes Attributes of the environment.
+	 * @param array $attribute_names Names of attributes handled by data source.
+	 * @param array $attributes      Attributes of the environment.
 	 */
-	public function __construct( $attributes = array() ) {
+	public function __construct( $attribute_names = array(), $attributes = array() ) {
+		$this->attribute_names = $attribute_names;
 		$this->attributes = $attributes;
 	}
 
@@ -23,17 +32,13 @@ class Environment implements \ArrayAccess {
 	 *
 	 * @return string Hash of the environment.
 	 */
-	 public function get_hash() {
-		 $env = array(
-			'browser' => $this['browser'],
-			'host' => $this['host'],
-			'jp_version' => $this['jp_version'],
-			'wp_version' => $this['wp_version'],
-			'php_version' => $this['php_version'],
-		);
-
-		 return sha1( json_encode( $env ) );
-	 }
+	public function get_hash() {
+		$env = array();
+		foreach ( $this->attribute_names as $attr ) {
+			$env[ $attr ] = $this[ $attr ];
+		}
+		return sha1( json_encode( $env ) );
+	}
 
 	/**
 	 * Set an attribute of the environment (not allowed!)

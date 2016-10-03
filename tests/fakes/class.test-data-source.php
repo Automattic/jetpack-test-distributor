@@ -32,6 +32,19 @@ class Test_Data_Source extends Data_Source {
 	/**
 	 * {@inheritdoc}
 	 */
+	public function get_environment_attributes() {
+		return array(
+			'browser',
+			'host',
+			'jp_version',
+			'wp_version',
+			'php_version',
+		);
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
 	public function get_tests() {
 		$tests = [];
 		foreach ( $this->memory_tables['jetpack_test_items'] as $row ) {

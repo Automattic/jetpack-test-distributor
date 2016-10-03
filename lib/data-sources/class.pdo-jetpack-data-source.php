@@ -30,6 +30,24 @@ class PDO_Jetpack_Data_Source extends Data_Source {
 		$this->pdo = new PDO( $dsn, $username, $password, $options );
 	}
 
+	/**
+	 * {@inheritdoc}
+	 */
+	public function get_environment_attributes() {
+		return array(
+			'browser',
+			'host',
+			'jp_version',
+			'wp_version',
+			'php_version',
+		);
+	}
+
+	/**
+	 * Get an array of versions and their modified modules.
+	 *
+	 * @return array Associative array with version => (array) of modules
+	 */
 	public function get_version_modules() {
 		static $version_modules;
 		if ( ! isset( $version_modules ) ) {
@@ -38,6 +56,11 @@ class PDO_Jetpack_Data_Source extends Data_Source {
 		return $version_modules;
 	}
 
+	/**
+	 * Load the versions and modules from the database.
+	 *
+	 * @return array Associative array with version => (array) of modules
+	 */
 	public function load_version_modules() {
 		$jti_query = $this->pdo->prepare( 'SELECT `jv`.* FROM `jetpack_versions` `jv`' );
 		$jti_query->execute();
@@ -47,6 +70,7 @@ class PDO_Jetpack_Data_Source extends Data_Source {
 		}
 		return $versions;
 	}
+
 	/**
 	 * {@inheritdoc}
 	 */

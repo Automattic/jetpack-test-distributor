@@ -23,6 +23,14 @@ abstract class Data_Source {
 	 */
 	abstract public function get_tests();
 
+
+	/**
+	 * Returns the environment attribute names that this data source uses.
+	 *
+	 * @return array Attribute names
+	 */
+	abstract public function get_environment_attributes();
+
 	/**
 	 * Returns an array of test IDs
 	 *

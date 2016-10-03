@@ -89,7 +89,7 @@ class Jetpack_Test_Item extends Test_Item {
 			return true;
 		}
 		if ( 5 === $this->attributes['importance']
-					&& Semver_Helper::is_major_release( $environment['jp_version'] ) ) {
+				&& Semver_Helper::is_major_release( $environment['jp_version'] ) ) {
 			return true;
 		}
 		return false;
