@@ -93,11 +93,10 @@ class PDO_Jetpack_Data_Source extends Data_Source {
 		$jtic_query->execute( array( ':site_id' => $site_id, ':environment' => $environment_hash ) );
 		$tests = $jtic_query->fetchAll( PDO::FETCH_COLUMN );
 		if ( false === $tests ) {
-			$tests = array();
-		} else {
-			foreach ( $tests as $index => $test_id ) {
-				$tests[ $index ] = (int) $test_id;
-			}
+			return array();
+		}
+		foreach ( $tests as $index => $test_id ) {
+			$tests[ $index ] = (int) $test_id;
 		}
 		return $tests;
 	}
