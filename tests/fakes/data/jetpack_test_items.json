@@ -93,5 +93,24 @@
     "browser": "",
     "initial_path": "/wp-admin/options-general.php?page=sharing",
     "added_by": "samhotchkiss"
+  },
+  {
+    "jetpack_test_item_id": "6",
+    "active": "1",
+    "date_added": "2016-07-19 03:33:10",
+    "importance": "10",
+    "title": "Do anything",
+    "instructions": "1) Do something cool.\r\n2) High five your friend.",
+    "min_jp_ver": "",
+    "max_jp_ver": "",
+    "min_wp_ver": "",
+    "max_wp_ver": "",
+    "min_php_ver": "",
+    "max_php_ver": "",
+    "module": "publicize",
+    "host": "",
+    "browser": "",
+    "initial_path": "/wp-admin/options-general.php?page=sharing",
+    "added_by": "samhotchkiss"
   }
 ]

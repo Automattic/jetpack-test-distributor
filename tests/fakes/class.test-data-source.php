@@ -67,6 +67,7 @@ class Test_Data_Source extends Data_Source {
 	 */
 	public function get_completed_tests( $site_id, $environment_hash ) {
 		$tests = [];
+		$site_id = (int) $site_id;
 		foreach ( $this->memory_tables['jetpack_test_items_completed'] as $item ) {
 			if ( $site_id === $item['site_id'] && $environment_hash === $item['environment'] ) {
 				$tests[] = $item['jetpack_test_item_id'];
@@ -80,8 +81,8 @@ class Test_Data_Source extends Data_Source {
 	 */
 	public function save_completed_test( $site_id, $test_id, $environment_hash ) {
 		$this->memory_tables['jetpack_test_items_completed'][] = array(
-			'site_id' => $site_id,
-			'jetpack_test_item_id' => $test_id,
+			'site_id' => (int)$site_id,
+			'jetpack_test_item_id' => (int)$test_id,
 			'environment' => $environment_hash
 		);
 		return true;

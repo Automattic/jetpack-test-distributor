@@ -16,6 +16,15 @@ class Test_Test_Distributor extends Base_Test {
 	// 	$this->assertLessThan( count( $test_distributor->get_tests( array() ) ), 0 );
 	// }
 
+	public function test_get_tests_completion_test() {
+		$data_source = $this->get_test_data_source();
+		$test_distributor = $this->get_test_distributor( $data_source );
+		$env = array();
+		$this->assertArrayHasKey( '6', $test_distributor->get_tests( '1', $env ) );
+		$test_distributor->mark_test_completed( '1', '6', $env );
+		$this->assertArrayNotHasKey( '6', $test_distributor->get_tests( '1', $env ) );
+	}
+
 	public function test_mark_test_completed() {
 		$data_source = $this->get_test_data_source();
 		$test_distributor = $this->get_test_distributor( $data_source );
