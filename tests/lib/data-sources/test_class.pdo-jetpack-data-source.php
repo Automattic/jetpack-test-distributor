@@ -29,7 +29,10 @@ class Test_PDO_Jetpack_Data_Source extends Base_Test {
 			$env = new Environment( $data_source->get_environment_attributes(), array() );
 			$this->assertNotContains( '1', $data_source->get_completed_tests( 101, $env->get_hash() ) );
 			$data_source->save_completed_test( '101', '1', $env->get_hash() );
+			$data_source->save_completed_test( '101', '2', $env->get_hash() );
 			$this->assertContains( '1', $data_source->get_completed_tests( 101, $env->get_hash() ) );
+			$this->assertContains( '2', $data_source->get_completed_tests( 101, $env->get_hash() ) );
+			$this->assertNotContains( '3', $data_source->get_completed_tests( 101, $env->get_hash() ) );
 	}
 
 	protected function get_pdo_jetpack_data_source() {
