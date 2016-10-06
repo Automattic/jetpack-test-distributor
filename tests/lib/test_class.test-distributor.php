@@ -3,7 +3,9 @@ namespace Automattic_Unit\Human_Testable;
 
 require_once( __DIR__ . DIRECTORY_SEPARATOR . 'test_class.base_test.php' );
 require_once( TESTED_LIBRARY_PATH . DIRECTORY_SEPARATOR . 'class.test-distributor.php' );
+require_once( TESTED_LIBRARY_PATH . DIRECTORY_SEPARATOR . 'class.environment.php' );
 use Automattic\Human_Testable\Test_Distributor;
+use Automattic\Human_Testable\Environment;
 
 class Test_Test_Distributor extends Base_Test {
 	/**
@@ -13,6 +15,18 @@ class Test_Test_Distributor extends Base_Test {
 	// 	$test_distributor = $this->get_test_distributor();
 	// 	$this->assertLessThan( count( $test_distributor->get_tests( array() ) ), 0 );
 	// }
+
+	public function test_mark_test_completed() {
+		$data_source = $this->get_test_data_source();
+		$test_distributor = $this->get_test_distributor( $data_source );
+		$env = array( 'browser' => 'ie' );
+		$env_obj = new Environment( $data_source->get_environment_attributes(), $env );
+		$env_b_obj = new Environment( $data_source->get_environment_attributes(), array() );
+		$this->assertNotContains( '1000', $data_source->get_completed_tests( '1', $env_obj->get_hash() ) );
+		$test_distributor->mark_test_completed( '1', '1000', $env );
+		$this->assertContains( '1000', $data_source->get_completed_tests( '1', $env_obj->get_hash() ) );
+		$this->assertNotContains( '1000', $data_source->get_completed_tests( '1', $env_b_obj->get_hash() ) );
+	}
 
 	public function test_browser_filter() {
 		$test_distributor = $this->get_test_distributor();

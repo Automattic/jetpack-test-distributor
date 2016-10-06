@@ -30,7 +30,7 @@ class Test_Distributor {
 	 * @param  array $environment Array of the environment.
 	 * @return array	List of tests.
 	 */
-	public function get_tests( $site_id, $environment = array() ) {
+	public function get_tests( $site_id, $environment ) {
 		$tests = array();
 		$environment = new Environment( $this->data_source->get_environment_attributes(), $environment );
 		$completed_tests = $this->data_source->get_completed_tests( $site_id, $environment->get_hash() );
@@ -44,5 +44,18 @@ class Test_Distributor {
 			$tests[ $test_id ] = $test_item->get_package();
 		}
 		return $tests;
+	}
+
+	/**
+	 * Marks a test as completed for a particular environment
+	 *
+	 * @param  int   $site_id     Site ID.
+	 * @param  int   $test_id     Test ID.
+	 * @param  array $environment Array of the environment.
+	 * @return array	List of tests.
+	 */
+	public function mark_test_completed( $site_id, $test_id, $environment ) {
+		$environment = new Environment( $this->data_source->get_environment_attributes(), $environment );
+		return $this->data_source->save_completed_test( $site_id, $test_id, $environment->get_hash() );
 	}
 }
