@@ -92,10 +92,10 @@ class Semver_Helper {
 	 */
 	static public function get_major_version( $version ) {
 		$version = static::normalize_version( $version, true );
-		if ( !isset($version) ) {
+		if ( ! isset( $version ) ) {
 			return null;
 		}
-		$parts = explode('.', $version);
-		return (int)$parts[0];
+		$parts = explode( '.', $version );
+		return (int) $parts[0];
 	}
 }
