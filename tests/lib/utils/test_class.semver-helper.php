@@ -85,4 +85,22 @@ class Test_Semver_Helper extends Base_Test {
 	public function test_is_major_release( $result, $version ) {
 		$this->assertEquals( $result, Semver_Helper::is_major_release( $version ) );
 	}
+
+	public function data_get_major_version() {
+		return array(
+			array( 1, '1.0.0' ),
+			array( 100, '100.0' ),
+			array( 1, '1.0.1' ),
+			array( 1, '1.1.0' ),
+			array( 1, '1.0.0-beta1' ),
+			array( null, 'dev-ljlksdjflksdjflkdsjf' ),
+		);
+	}
+
+	/**
+	* @dataProvider data_get_major_version
+	*/
+	public function test_get_major_version( $result, $version ) {
+		$this->assertEquals( $result, Semver_Helper::get_major_version( $version ), true );
+	}
 }
