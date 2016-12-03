@@ -1,5 +1,5 @@
 <?php
-namespace Automattic\Human_Testable;
+namespace Automattic\Human_Testable\Env;
 
 class Environment implements \ArrayAccess {
 	/**
@@ -10,20 +10,12 @@ class Environment implements \ArrayAccess {
 	private $attributes = array();
 
 	/**
-	 * Data Source Attribute names
-	 *
-	 * @var array
-	 */
-	 private $attribute_names = array();
-
-	/**
 	 * Constructor.
 	 *
 	 * @param array $attribute_names Names of attributes handled by data source.
 	 * @param array $attributes      Attributes of the environment.
 	 */
-	public function __construct( $attribute_names = array(), $attributes = array() ) {
-		$this->attribute_names = $attribute_names;
+	public function __construct( $attributes = array() ) {
 		$this->attributes = $attributes;
 	}
 
@@ -33,11 +25,7 @@ class Environment implements \ArrayAccess {
 	 * @return string Hash of the environment.
 	 */
 	public function get_hash() {
-		$env = array();
-		foreach ( $this->attribute_names as $attr ) {
-			$env[ $attr ] = $this[ $attr ];
-		}
-		return sha1( json_encode( $env ) );
+		return sha1( json_encode( $this->attributes ) );
 	}
 
 	/**
@@ -56,7 +44,7 @@ class Environment implements \ArrayAccess {
 	 *
 	 * @param mixed $offset Offset of array.
 	 */
-	public function offsetGet ( $offset ) {
+	public function offsetGet( $offset ) {
 		if ( isset( $this->attributes[ $offset ] ) ) {
 			return $this->attributes[ $offset ];
 		}
