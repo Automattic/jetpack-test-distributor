@@ -12,7 +12,6 @@ class Environment implements \ArrayAccess {
 	/**
 	 * Constructor.
 	 *
-	 * @param array $attribute_names Names of attributes handled by data source.
 	 * @param array $attributes      Attributes of the environment.
 	 */
 	public function __construct( $attributes = array() ) {

@@ -89,8 +89,8 @@ class PDO_Jetpack_Data_Source extends Data_Source {
 	/**
 	 * Loads the environment set
 	 *
-	 * @param  int             $site_id     Current site ID
-	 * @param  Environment_Set $environment Loaded current environment
+	 * @param  int             $site_id         Current site ID
+	 * @param  Environment_Set $environment_set Loaded current environment set
 	 * @return Environment_Set Same environment set
 	 */
 	public function load_completed_tests( $site_id, Environment_Set $environment_set ) {

@@ -47,10 +47,10 @@ class Test_Distributor {
 	 * @param  int   $site_id     Site ID.
 	 * @param  int   $test_id     Test ID.
 	 * @param  array $environment Array of the current environment.
-	 * @param  bool  $skipped     Whether the test was completed or skipped
 	 * @return array	List of tests.
 	 */
-	public function mark_test_completed( $site_id, $test_id, $environment, $skipped = false ) {
+	public function mark_test_completed( $site_id, $test_id, $environment ) {
+		$environment = $this->data_source->generate_environment( $environment );
 		return $this->data_source->save_completed_test( $site_id, $test_id, $environment );
 	}
 }

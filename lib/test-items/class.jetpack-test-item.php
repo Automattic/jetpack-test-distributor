@@ -64,7 +64,7 @@ class Jetpack_Test_Item extends Test_Item {
 			return false;
 		}
 		$environment = $environment_set->get_current_environment();
-		if ( isset( $environment['jp_version'] ) && ! $this->test_importance( $environment ) ) {
+		if ( isset( $environment['jp_version'] ) && ! $this->test_importance( $environment_set ) ) {
 			return false;
 		}
 		if ( isset( $this->attributes['host'] )
@@ -81,10 +81,11 @@ class Jetpack_Test_Item extends Test_Item {
 	/**
 	 * Check if a test item should be returned based on its importance
 	 *
-	 * @param  array $environment Current environment.
-	 * @return bool               Test result.
+	 * @param  Environment $environment_set Current loaded environment.
+	 * @return bool        Test result.
 	 */
-	protected function test_importance( $environment ) {
+	protected function test_importance( Environment_Set $environment_set ) {
+		$environment = $environment_set->get_current_environment();
 		if ( ! isset( $this->attributes['importance'] ) || 10 === $this->attributes['importance'] ) {
 			return true;
 		}

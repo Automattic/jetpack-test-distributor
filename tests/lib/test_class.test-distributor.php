@@ -22,7 +22,7 @@ class Test_Test_Distributor extends Base_Test {
 		$env = array();
 		$env_object = $data_source->generate_environment( $env );
 		$this->assertArrayHasKey( '6', $test_distributor->get_tests( '1', $env ) );
-		$test_distributor->mark_test_completed( '1', '6', $env_object );
+		$test_distributor->mark_test_completed( '1', '6', $env );
 		$this->assertArrayNotHasKey( '6', $test_distributor->get_tests( '1', $env ) );
 	}
 
@@ -33,7 +33,7 @@ class Test_Test_Distributor extends Base_Test {
 		$env_obj = $data_source->generate_environment( $env );
 
 		$this->assertFalse( $data_source->get_environment_set( '1', $env )->match( '1000' ) );
-		$test_distributor->mark_test_completed( '1', '1000', $env_obj );
+		$test_distributor->mark_test_completed( '1', '1000', $env );
 		$this->assertTrue( $data_source->get_environment_set( '1', $env )->match( '1000' ) );
 		$this->assertFalse( $data_source->get_environment_set( '1', $env )->match( '1001' ) );
 	}
