@@ -69,4 +69,23 @@ class Environment implements \ArrayAccess {
 	public function offsetUnset( $offset ) {
 		throw new \Exception( "Trying to set read-only attribute '{$offset}''" );
 	}
+
+	/**
+	 * Tests if another environment is equal
+	 *
+	 * @param  Environment $test_environment Environment to compare this environment with.
+	 * @param  array       $attribute_names  Names of attributes to check; Null will check all (Default: null)
+	 * @return boolean     Returns true if the environments are equal (based on provided attribute names)
+	 */
+	public function equals( Environment $test_environment, array $attribute_names = null ) {
+		if ( null === $attribute_names ) {
+			$attribute_names = array_keys( $this->attributes );
+		}
+		foreach ( $attribute_names as $attribute ) {
+			if ( $test_environment[ $attribute ] !== $this[ $attribute ] ) {
+				return false;
+			}
+		}
+		return true;
+	}
 }

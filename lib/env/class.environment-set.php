@@ -28,6 +28,32 @@ class Environment_Set {
 	}
 
 	/**
+	 * Check if the current environment has been tested based on a full
+	 * set ($attributes = null) or subset of attributes.
+	 *
+	 * @param  int        $test_id
+	 * @param  array|null $attribute_names  Name of attributes to test from the current environment
+	 * @return boolean    Returns true if there is a match in the set of tested environments for the current environment
+	 */
+	public function match( $test_id, $attribute_names = null ) {
+		if ( ! isset( $this->completed_test_environments[ $test_id ] ) ) {
+			return false;
+		}
+		if ( null === $attribute_names ) {
+			if ( isset( $this->completed_test_environments[ $test_id ][ $this->current_environment->get_hash() ] ) ) {
+				return true;
+			}
+			return false;
+		}
+		foreach ( $this->completed_test_environments[ $test_id ] as $test ) {
+			if ( $test->equals( $this->current_environment, $attribute_names ) ) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
 	 * Loads an environment into the set
 	 *
 	 * @param  int         $test_id      ID of the test that we're loading
@@ -43,8 +69,8 @@ class Environment_Set {
 	/**
 	 * Gets all completed tests for a particular test ID
 	 *
-	 * @param  in
-	 * @return [type]
+	 * @param int $test_id
+	 * @return array Completed environments for a test
 	 */
 	public function get_completed_tests( $test_id ) {
 		if ( ! isset( $this->completed_test_environments[ $test_id ] ) ) {

@@ -1,7 +1,7 @@
 <?php
 namespace Automattic_Unit\Human_Testable\Env;
 
-require_once( dirname( __DIR__ ) . DIRECTORY_SEPARATOR . 'test_class.base_test.php' );
+require_once( dirname( __DIR__ ) . DIRECTORY_SEPARATOR . 'test_class.base-test.php' );
 require_once( TESTED_LIBRARY_PATH . DIRECTORY_SEPARATOR . 'env' . DIRECTORY_SEPARATOR . 'class.environment.php' );
 
 use Automattic\Human_Testable\Env\Environment;
