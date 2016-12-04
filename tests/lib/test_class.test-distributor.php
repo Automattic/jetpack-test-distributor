@@ -1,27 +1,28 @@
 <?php
 namespace Automattic_Unit\Human_Testable;
 
-require_once( __DIR__ . DIRECTORY_SEPARATOR . 'test_class.base_test.php' );
+require_once( __DIR__ . DIRECTORY_SEPARATOR . 'test_class.base-test.php' );
 require_once( TESTED_LIBRARY_PATH . DIRECTORY_SEPARATOR . 'class.test-distributor.php' );
-require_once( TESTED_LIBRARY_PATH . DIRECTORY_SEPARATOR . 'class.environment.php' );
+require_once( TESTED_LIBRARY_PATH . DIRECTORY_SEPARATOR . 'env' . DIRECTORY_SEPARATOR . 'class.environment.php' );
+
 use Automattic\Human_Testable\Test_Distributor;
-use Automattic\Human_Testable\Environment;
+use Automattic\Human_Testable\Env\Environment;
 
 class Test_Test_Distributor extends Base_Test {
 	/**
 	 * Just a really bad test to get the ball rolling
 	 */
 	// public function test_simple_get_tests() {
-	// 	$test_distributor = $this->get_test_distributor();
-	// 	$this->assertLessThan( count( $test_distributor->get_tests( array() ) ), 0 );
+	// $test_distributor = $this->get_test_distributor();
+	// $this->assertLessThan( count( $test_distributor->get_tests( array() ) ), 0 );
 	// }
-
 	public function test_get_tests_completion_test() {
 		$data_source = $this->get_test_data_source();
 		$test_distributor = $this->get_test_distributor( $data_source );
 		$env = array();
+		$env_object = $data_source->generate_environment( $env );
 		$this->assertArrayHasKey( '6', $test_distributor->get_tests( '1', $env ) );
-		$test_distributor->mark_test_completed( '1', '6', $env );
+		$test_distributor->mark_test_completed( '1', '6', $env_object );
 		$this->assertArrayNotHasKey( '6', $test_distributor->get_tests( '1', $env ) );
 	}
 
@@ -29,12 +30,12 @@ class Test_Test_Distributor extends Base_Test {
 		$data_source = $this->get_test_data_source();
 		$test_distributor = $this->get_test_distributor( $data_source );
 		$env = array( 'browser' => 'ie' );
-		$env_obj = new Environment( $data_source->get_environment_attributes(), $env );
-		$env_b_obj = new Environment( $data_source->get_environment_attributes(), array() );
-		$this->assertNotContains( '1000', $data_source->get_completed_tests( '1', $env_obj->get_hash() ) );
-		$test_distributor->mark_test_completed( '1', '1000', $env );
-		$this->assertContains( '1000', $data_source->get_completed_tests( '1', $env_obj->get_hash() ) );
-		$this->assertNotContains( '1000', $data_source->get_completed_tests( '1', $env_b_obj->get_hash() ) );
+		$env_obj = $data_source->generate_environment( $env );
+
+		$this->assertFalse( $data_source->get_environment_set( '1', $env )->match( '1000' ) );
+		$test_distributor->mark_test_completed( '1', '1000', $env_obj );
+		$this->assertTrue( $data_source->get_environment_set( '1', $env )->match( '1000' ) );
+		$this->assertFalse( $data_source->get_environment_set( '1', $env )->match( '1001' ) );
 	}
 
 	public function test_browser_filter() {

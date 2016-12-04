@@ -3,7 +3,9 @@ namespace Automattic\Human_Testable\Test_Items;
 
 require_once( __DIR__ . DIRECTORY_SEPARATOR . 'class.test-item.php' );
 require_once( dirname( __DIR__ ) . DIRECTORY_SEPARATOR . 'utils' . DIRECTORY_SEPARATOR . 'class.semver-helper.php' );
+require_once( dirname( __DIR__ ) . DIRECTORY_SEPARATOR . 'env' . DIRECTORY_SEPARATOR . 'class.environment-set.php' );
 
+use Automattic\Human_Testable\Env\Environment_Set;
 use Automattic\Human_Testable\Utils\Semver_Helper;
 
 /**
@@ -57,10 +59,11 @@ class Jetpack_Test_Item extends Test_Item {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function test_environment( $environment ) {
-		if ( ! parent::test_environment( $environment ) ) {
+	public function test_environment( Environment_Set $environment_set ) {
+		if ( ! parent::test_environment( $environment_set ) ) {
 			return false;
 		}
+		$environment = $environment_set->get_current_environment();
 		if ( isset( $environment['jp_version'] ) && ! $this->test_importance( $environment ) ) {
 			return false;
 		}
