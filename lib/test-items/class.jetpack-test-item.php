@@ -89,7 +89,7 @@ class Jetpack_Test_Item extends Test_Item {
 		if ( ! isset( $this->attributes['importance'] ) || 10 === $this->attributes['importance'] ) {
 			return true;
 		}
-		if ( $this->did_module_change( $environment ) ) {
+		if ( $this->did_module_change( $environment_set ) ) {
 			return true;
 		}
 		if ( 5 === $this->attributes['importance']
@@ -102,11 +102,12 @@ class Jetpack_Test_Item extends Test_Item {
 	/**
 	 * Check if a module changed in a version release
 	 *
-	 * @param  array $environment Current environment.
-	 * @return bool               Test result.
+	 * @param  Environment_Set $environment_set Current loaded environment set.
+	 * @return bool            Test result.
 	 * @todo
 	 */
-	protected function did_module_change( $environment ) {
+	protected function did_module_change( Environment_Set $environment_set ) {
+		$environment = $environment_set->get_current_environment();
 		$version_modules = $this->data_source->get_version_modules();
 		$module = $this->get_module();
 		$version = Semver_Helper::normalize_version( $environment['jp_version'], true );
