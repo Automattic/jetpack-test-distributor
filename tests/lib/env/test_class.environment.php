@@ -34,4 +34,13 @@ class Test_Environment extends Base_Test {
 		$env = new Environment( array( 'fish' => 'salmon', 'pie' => 'apple' ) );
 		unset( $env['fish'] );
 	}
+
+	public function test_equals() {
+		$env_a = new Environment( array( 'fish' => 'salmon', 'pie' => 'apple' ) );
+		$env_b = new Environment( array( 'fish' => 'salmon', 'pie' => 'apple', 'moon' => 'base' ) );
+		$this->assertTrue( $env_a->equals( $env_a ) );
+		$this->assertFalse( $env_b->equals( $env_a ) );
+		$this->assertTrue( $env_b->equals( $env_a, array( 'fish', 'pie' ) ) );
+		$this->assertFalse( $env_b->equals( $env_a, array( 'moon', 'pie' ) ) );
+	}
 }

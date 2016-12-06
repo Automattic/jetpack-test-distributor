@@ -27,6 +27,18 @@ class Test_Environment_Set extends Base_Test {
 
 		$this->assertArrayHasKey( $env_b->get_hash(), $tests );
 		$this->assertEmpty( $env_set->get_completed_tests( 2 ) );
+	}
 
+	public function test_match() {
+		$env = new Environment( array( 'fish' => 'salmon', 'pie' => 'apple' ) );
+		$env_b = new Environment( array( 'fish' => 'salmon', 'pie' => 'walnut', 'fruit' => 'banana' ) );
+		$env_c = new Environment( array( 'fish' => 'trout', 'pie' => 'apple', 'fruit' => 'kiwi' ) );
+		$env_set = new Environment_Set( $env );
+		$env_set->load_completed_test( 1, $env_b );
+		$env_set->load_completed_test( 1, $env_c );
+		$this->assertFalse( $env_set->match( 1 ) );
+		$this->assertTrue( $env_set->match( 1, array( 'fish' ) ) );
+		$this->assertTrue( $env_set->match( 1, array( 'pie' ) ) );
+		$this->assertFalse( $env_set->match( 1, array( 'fruit' ) ) );
 	}
 }
