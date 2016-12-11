@@ -97,7 +97,7 @@ class Test_Data_Source extends Data_Source {
 	public function generate_environment( array $environment ) {
 		$env = array();
 		$env['jp_version'] = isset( $environment['jp_version'] ) ? $environment['jp_version'] : null;
-		$env['jp_major_version_search'] = Version_Helper::get_major_version( $env['jp_version'] );
+		$env['jp_major_version'] = Version_Helper::get_major_version( $env['jp_version'] );
 		$env['php_version'] = isset( $environment['php_version'] ) ? $environment['php_version'] : null;
 		$env['wp_version'] = isset( $environment['wp_version'] ) ? $environment['wp_version'] : null;
 		$env['browser'] = isset( $environment['browser'] ) ? $environment['browser'] : null;
