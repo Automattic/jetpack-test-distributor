@@ -93,7 +93,7 @@ class Jetpack_Test_Item extends Test_Item {
 			return true;
 		}
 		if ( 5 === $this->attributes['importance']
-				&& Semver_Helper::is_major_release( $environment['jp_version'] ) ) {
+				&& ! $environment_set->match( $this->get_id(), array( 'php_version', 'wp_version', 'jp_major_version', 'browser', 'host' ) ) ) {
 			return true;
 		}
 		return false;
