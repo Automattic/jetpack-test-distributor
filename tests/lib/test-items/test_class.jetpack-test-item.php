@@ -1,7 +1,7 @@
 <?php
 namespace Automattic_Unit\Human_Testable\Test_Items;
 
-require_once( dirname( __DIR__ ) . DIRECTORY_SEPARATOR . 'test_class.base_test.php' );
+require_once( dirname( __DIR__ ) . DIRECTORY_SEPARATOR . 'test_class.base-test.php' );
 require_once( TESTED_LIBRARY_PATH . DIRECTORY_SEPARATOR . 'test-items' . DIRECTORY_SEPARATOR . 'class.jetpack-test-item.php' );
 
 use Automattic\Human_Testable\Test_Items\Jetpack_Test_Item;
@@ -49,14 +49,31 @@ class Test_Jetpack_Test_Item extends Base_Test {
 	}
 
 	public function test_did_module_change() {
-		$item = $this->get_jetpack_test_item( array( 'importance' => 5, 'module' =>  'comments' ) );
+		$item = $this->get_jetpack_test_item( array( 'importance' => 1, 'module' => 'comments' ) );
 		$this->assertTrue( $item->test_environment( $this->fill_environment( array( 'jp_version' => '4.6.0' ) ) ) );
 		$this->assertFalse( $item->test_environment( $this->fill_environment( array( 'jp_version' => '4.5.9' ) ) ) );
 		$this->assertFalse( $item->test_environment( $this->fill_environment( array( 'jp_version' => '4.5.8' ) ) ) );
 	}
 
-	protected function fill_environment( $environment ) {
-		return array_merge(
+	public function test_major_version_medium_importance() {
+		$item = $this->get_jetpack_test_item( array( 'importance' => 5, 'module' => 'comments' ) );
+		$base_env = array( 'browser' => 'ie', 'host' => 'bluehost', 'wp_version' => '4.7.0', 'php_version' => '7.0.1' );
+		$env_set_a = $this->fill_environment( array_merge( $base_env, array( 'jp_version' => '4.6.0' ) ) );
+		$env_set_b = $this->fill_environment( array_merge( $base_env, array( 'jp_version' => '4.7.1' ) ) );
+		$env_set_c = $this->fill_environment( array_merge( $base_env, array( 'jp_version' => '3.8.5' ) ) );
+		$env_a = $env_set_a->get_current_environment();
+		$env_b = $env_set_b->get_current_environment();
+		$env_c = $env_set_c->get_current_environment();
+		$this->assertTrue( $item->test_environment( $env_set_b ) );
+		$env_set_b->load_completed_test( 1, $env_c );
+		$this->assertTrue( $item->test_environment( $env_set_b ) );
+		$env_set_b->load_completed_test( 1, $env_a );
+		$this->assertFalse( $item->test_environment( $env_set_b ) );
+	}
+
+	protected function fill_environment( $environment, $site_id = 1 ) {
+		$data_source = $this->get_test_data_source();
+		return $data_source->get_environment_set( $site_id, array_merge(
 			array(
 				'browser' => null,
 				'host' => null,
@@ -64,7 +81,7 @@ class Test_Jetpack_Test_Item extends Base_Test {
 				'wp_version' => null,
 				'php_version' => null,
 			), $environment
-		);
+		) );
 	}
 
 	protected function get_fake_attributes( $attr = array() ) {

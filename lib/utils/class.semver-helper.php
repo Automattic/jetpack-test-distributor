@@ -80,6 +80,22 @@ class Semver_Helper {
 	 */
 	static public function is_major_release( $version ) {
 		$version = static::normalize_version( $version, true );
-		return preg_match( '/^\d+\.0.0$/', $version ) === 1;
+		return 1 === preg_match( '/^\d+\.0.0$/', $version );
+	}
+
+	/**
+	 * Returns the major version number
+	 *
+	 * @param  string $version Version to test.
+	 * @return int|null        Result of the test.
+	 * @todo
+	 */
+	static public function get_major_version( $version ) {
+		$version = static::normalize_version( $version, true );
+		if ( ! isset( $version ) ) {
+			return null;
+		}
+		$parts = explode( '.', $version );
+		return (int) $parts[0];
 	}
 }

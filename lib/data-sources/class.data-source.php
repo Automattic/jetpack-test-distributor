@@ -1,6 +1,12 @@
 <?php
 namespace Automattic\Human_Testable\Data_Sources;
 
+require_once( dirname( __DIR__ ) . DIRECTORY_SEPARATOR . 'env' . DIRECTORY_SEPARATOR . 'class.environment.php' );
+require_once( dirname( __DIR__ ) . DIRECTORY_SEPARATOR . 'env' . DIRECTORY_SEPARATOR . 'class.environment-set.php' );
+
+use Automattic\Human_Testable\Env\Environment;
+use Automattic\Human_Testable\Env\Environment_Set;
+
 /**
  * Abstract class for a data source
  */
@@ -23,32 +29,33 @@ abstract class Data_Source {
 	 */
 	abstract public function get_tests();
 
+	/**
+	 * Generate an Environment object from an array of environment attributes
+	 *
+	 * @param  array $environment Array of the environnent
+	 * @return Environment
+	 */
+	abstract public function generate_environment( array $environment );
 
 	/**
-	 * Returns the environment attribute names that this data source uses.
+	 * Returns loaded environment set
 	 *
-	 * @return array Attribute names
+	 * @param  int   $site_id     Site ID for the current site.
+	 * @param  array $environment Array containing current environment's attributes
+	 * @return Environment_Set
 	 */
-	abstract public function get_environment_attributes();
-
-	/**
-	 * Returns an array of test IDs
-	 *
-	 * @param string $site_id          ID of the site requesting tests.
-	 * @param string $environment_hash Environment hash.
-	 * @return array Array of test IDs
-	 */
-	abstract public function get_completed_tests( $site_id, $environment_hash );
+	abstract public function get_environment_set( $site_id, array $environment );
 
 	/**
 	 * Marks a test as being completed or skipped for a site ID
 	 *
-	 * @param int    $site_id          ID of the site requesting tests.
-	 * @param int    $test_id          ID of the test that was completed or skipped.
-	 * @param string $environment_hash Environment hash.
+	 * @param int         $site_id     ID of the site requesting tests.
+	 * @param int         $test_id     ID of the test that was completed or skipped.
+	 * @param Environment $environment Current environment
 	 * @return boolean Success result.
 	 */
-	abstract public function save_completed_test( $site_id, $test_id, $environment_hash );
+	abstract public function save_completed_test( $site_id, $test_id, Environment $environment );
+
 
 	/**
 	 * Returns the test item class to use for this data source
