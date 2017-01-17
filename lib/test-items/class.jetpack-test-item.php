@@ -85,7 +85,6 @@ class Jetpack_Test_Item extends Test_Item {
      * @return bool Test result.
      */
 	protected function check_importance( Environment_History $environment_set ) {
-		$environment = $environment_set->get_current_environment();
 		if ( ! isset( $this->attributes['importance'] ) || 10 === $this->attributes['importance'] ) {
 			return true;
 		}
