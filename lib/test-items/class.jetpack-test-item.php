@@ -2,11 +2,11 @@
 namespace Automattic\Human_Testable\Test_Items;
 
 require_once( __DIR__ . DIRECTORY_SEPARATOR . 'class.test-item.php' );
-require_once( dirname( __DIR__ ) . DIRECTORY_SEPARATOR . 'utils' . DIRECTORY_SEPARATOR . 'class.semver-helper.php' );
+require_once( dirname( __DIR__ ) . DIRECTORY_SEPARATOR . 'utils' . DIRECTORY_SEPARATOR . 'class.version-helper.php' );
 require_once( dirname( __DIR__ ) . DIRECTORY_SEPARATOR . 'env' . DIRECTORY_SEPARATOR . 'class.environment-set.php' );
 
 use Automattic\Human_Testable\Env\Environment_Set;
-use Automattic\Human_Testable\Utils\Semver_Helper;
+use Automattic\Human_Testable\Utils\Version_Helper;
 
 /**
  * Class for a Jetpack test item
@@ -93,7 +93,7 @@ class Jetpack_Test_Item extends Test_Item {
 			return true;
 		}
 		if ( 5 === $this->attributes['importance']
-				&& Semver_Helper::is_major_release( $environment['jp_version'] ) ) {
+				&& Version_Helper::is_major_release( $environment['jp_version'] ) ) {
 			return true;
 		}
 		return false;
@@ -110,7 +110,7 @@ class Jetpack_Test_Item extends Test_Item {
 		$environment = $environment_set->get_current_environment();
 		$version_modules = $this->data_source->get_version_modules();
 		$module = $this->get_module();
-		$version = Semver_Helper::normalize_version( $environment['jp_version'], true );
+		$version = Version_Helper::normalize_version( $environment['jp_version'], true );
 		if ( ! isset( $version )
 				|| ! isset( $module )
 				|| ! isset( $version_modules[ $version ] )

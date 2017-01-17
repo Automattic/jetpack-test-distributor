@@ -5,11 +5,11 @@ require_once( __DIR__ . DIRECTORY_SEPARATOR . 'class.data-source.php' );
 require_once( dirname( __DIR__ ) . DIRECTORY_SEPARATOR . 'test-items' . DIRECTORY_SEPARATOR . 'class.jetpack-test-item.php' );
 require_once( dirname( __DIR__ ) . DIRECTORY_SEPARATOR . 'env' . DIRECTORY_SEPARATOR . 'class.environment.php' );
 require_once( dirname( __DIR__ ) . DIRECTORY_SEPARATOR . 'env' . DIRECTORY_SEPARATOR . 'class.environment-set.php' );
-require_once( dirname( __DIR__ ) . DIRECTORY_SEPARATOR . 'utils' . DIRECTORY_SEPARATOR . 'class.semver-helper.php' );
+require_once( dirname( __DIR__ ) . DIRECTORY_SEPARATOR . 'utils' . DIRECTORY_SEPARATOR . 'class.version-helper.php' );
 
 use PDO;
 use Automattic\Human_Testable\Test_Items\Jetpack_Test_Item;
-use Automattic\Human_Testable\Utils\Semver_Helper;
+use Automattic\Human_Testable\Utils\Version_Helper;
 use Automattic\Human_Testable\Env\Environment;
 use Automattic\Human_Testable\Env\Environment_Set;
 
@@ -127,7 +127,7 @@ class PDO_Jetpack_Data_Source extends Data_Source {
 	public function generate_environment( array $environment ) {
 		$env = array();
 		$env['jp_version'] = isset( $environment['jp_version'] ) ? $environment['jp_version'] : null;
-		$env['jp_major_version'] = Semver_Helper::get_major_version( $env['jp_version'] );
+		$env['jp_major_version'] = Version_Helper::get_major_version( $env['jp_version'] );
 		$env['php_version'] = isset( $environment['php_version'] ) ? $environment['php_version'] : null;
 		$env['wp_version'] = isset( $environment['wp_version'] ) ? $environment['wp_version'] : null;
 		$env['browser'] = isset( $environment['browser'] ) ? $environment['browser'] : null;

@@ -4,7 +4,7 @@ namespace Automattic\Human_Testable\Utils;
 /**
  * Helper class for semantic versions
  */
-class Semver_Helper {
+class Version_Helper {
 	/**
 	 * Tests one version is between two other versions
 	 *
