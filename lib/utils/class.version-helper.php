@@ -80,7 +80,7 @@ class Version_Helper {
 	 */
 	static public function is_major_release( $version ) {
 		$version = static::normalize_version( $version, true );
-		return 1 === preg_match( '/^\d+\.0.0$/', $version );
+		return 1 === preg_match( '/^\d+\.\d+.0$/', $version );
 	}
 
 	/**
@@ -96,6 +96,6 @@ class Version_Helper {
 			return null;
 		}
 		$parts = explode( '.', $version );
-		return (int) $parts[0];
+		return $parts[0] . '.' . $parts[1];
 	}
 }

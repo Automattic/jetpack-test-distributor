@@ -73,7 +73,8 @@ class Test_Version_Helper extends Base_Test {
 			array( true, '1.0.0' ),
 			array( true, '100.0' ),
 			array( false, '1.0.1' ),
-			array( false, '1.1.0' ),
+			array( true, '1.1.0' ),
+			array( true, '2.2.0' ),
 			array( true, '1.0.0-beta1' ),
 			array( false, '1.0.1-beta1' ),
 		);
@@ -88,11 +89,11 @@ class Test_Version_Helper extends Base_Test {
 
 	public function data_get_major_version() {
 		return array(
-			array( 1, '1.0.0' ),
-			array( 100, '100.0' ),
-			array( 1, '1.0.1' ),
-			array( 1, '1.1.0' ),
-			array( 1, '1.0.0-beta1' ),
+			array( '1.0', '1.0.0' ),
+			array( '100.0', '100.0' ),
+			array( '1.0', '1.0.1' ),
+			array( '1.1', '1.1.0' ),
+			array( '1.0', '1.0.0-beta1' ),
 			array( null, 'dev-ljlksdjflksdjflkdsjf' ),
 		);
 	}

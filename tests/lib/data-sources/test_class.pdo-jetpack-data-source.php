@@ -52,7 +52,7 @@ class Test_PDO_Jetpack_Data_Source extends Base_Test {
 		$this->assertEquals( $env['wp_version'], $env_array['wp_version'] );
 		$this->assertEquals( $env['php_version'], $env_array['php_version'] );
 		$this->assertEquals( $env['jp_version'], $env_array['jp_version'] );
-		$this->assertEquals( $env['jp_major_version'], 4 );
+		$this->assertEquals( $env['jp_major_version'], '4.1' );
 	}
 
 	public function test_get_version_modules() {
