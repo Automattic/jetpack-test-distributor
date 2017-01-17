@@ -58,8 +58,8 @@ class Test_Jetpack_Test_Item extends Base_Test {
 	public function test_major_version_medium_importance() {
 		$item = $this->get_jetpack_test_item( array( 'importance' => 5, 'module' => 'comments' ) );
 		$base_env = array( 'browser' => 'ie', 'host' => 'bluehost', 'wp_version' => '4.7.0', 'php_version' => '7.0.1' );
-		$env_set_a = $this->fill_environment( array_merge( $base_env, array( 'jp_version' => '4.6.0' ) ) );
-		$env_set_b = $this->fill_environment( array_merge( $base_env, array( 'jp_version' => '4.7.1' ) ) );
+		$env_set_a = $this->fill_environment( array_merge( $base_env, array( 'jp_version' => '4.7.2' ) ) );
+		$env_set_b = $this->fill_environment( array_merge( $base_env, array( 'jp_version' => '4.7.4' ) ) );
 		$env_set_c = $this->fill_environment( array_merge( $base_env, array( 'jp_version' => '3.8.5' ) ) );
 		$env_a = $env_set_a->get_current_environment();
 		$env_b = $env_set_b->get_current_environment();
