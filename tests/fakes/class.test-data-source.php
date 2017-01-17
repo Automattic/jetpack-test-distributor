@@ -41,7 +41,7 @@ class Test_Data_Source extends Data_Source {
 	public function get_tests() {
 		$tests = [];
 		foreach ( $this->memory_tables['jetpack_test_items'] as $row ) {
-			$test_item = $this->hydrate_test_item( $row );
+			$test_item = $this->generate_test_item( $row );
 			$tests[ $test_item->get_id() ] = $test_item;
 		}
 		return $tests;

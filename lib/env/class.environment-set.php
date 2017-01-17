@@ -7,7 +7,7 @@ class Environment_Set {
 	/**
 	 * Completed environments grouped by test ID
 	 *
-	 * @var array
+	 * @var Environment[]
 	 */
 	private $completed_test_environments = array();
 
