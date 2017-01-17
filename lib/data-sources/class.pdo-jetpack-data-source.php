@@ -80,7 +80,7 @@ class PDO_Jetpack_Data_Source extends Data_Source {
 		$jti_query->execute();
 		$tests = array();
 		while ( $row = $jti_query->fetch( PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT ) ) {
-			$test_item = $this->prepare( $row );
+			$test_item = $this->hydrate_test_item( $row );
 			$tests[ $test_item->get_id() ] = $test_item;
 		}
 		return $tests;

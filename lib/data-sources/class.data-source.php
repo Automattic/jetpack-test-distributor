@@ -12,12 +12,12 @@ use Automattic\Human_Testable\Env\Environment_Set;
  */
 abstract class Data_Source {
 	/**
-	 * Prepares a test item object with an array of attributes from the database
+	 * Hydrates a test item object with an array of attributes from the database
 	 *
 	 * @param  array $attributes List of attributes to use in new object.
 	 * @return Automattic\Human_Testable\Test_Items\Test_Item
 	 */
-	protected function prepare( $attributes ) {
+	protected function hydrate_test_item( $attributes ) {
 		$class_name = $this->get_test_item_class();
 		return new $class_name( $this, $attributes );
 	}
