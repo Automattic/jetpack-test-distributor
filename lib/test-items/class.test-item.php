@@ -1,11 +1,13 @@
 <?php
 namespace Automattic\Human_Testable\Test_Items;
 
-require_once( dirname( __DIR__ ) . DIRECTORY_SEPARATOR . 'utils' . DIRECTORY_SEPARATOR . 'class.semver-helper.php' );
+require_once( dirname( __DIR__ ) . DIRECTORY_SEPARATOR . 'utils' . DIRECTORY_SEPARATOR . 'class.version-helper.php' );
 require_once( dirname( __DIR__ ) . DIRECTORY_SEPARATOR . 'data-sources' . DIRECTORY_SEPARATOR . 'class.data-source.php' );
+require_once( dirname( __DIR__ ) . DIRECTORY_SEPARATOR . 'env' . DIRECTORY_SEPARATOR . 'class.environment-history.php' );
 
+use Automattic\Human_Testable\Env\Environment_History;
 use Automattic\Human_Testable\Data_Sources\Data_Source;
-use Automattic\Human_Testable\Utils\Semver_Helper;
+use Automattic\Human_Testable\Utils\Version_Helper;
 
 /**
  * Abstract class for a test item
@@ -68,12 +70,17 @@ abstract class Test_Item {
 	/**
 	 * Tests the environment for a match with the test item
 	 *
-	 * @param  array $environment Current environment.
+	 * @param  Environment_History $environment_set Current environment set.
 	 * @return bool Test result
 	 */
-	public function test_environment( $environment ) {
+	public function check_environment( Environment_History $environment_set ) {
+		if ( $environment_set->match( $this->get_id() ) ) {
+			return false;
+		}
+
+		$environment = $environment_set->get_current_environment();
 		foreach ( $this->get_version_tests() as $test ) {
-			if ( ! Semver_Helper::test_version( $environment[ $test['env_attr'] ], $this->attributes[ $test['min_attr'] ], $this->attributes[ $test['max_attr'] ] )
+			if ( ! Version_Helper::test_version( $environment[ $test['env_attr'] ], $this->attributes[ $test['min_attr'] ], $this->attributes[ $test['max_attr'] ] )
 			) {
 				return false;
 			}

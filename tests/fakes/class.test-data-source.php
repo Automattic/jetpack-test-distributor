@@ -3,9 +3,15 @@ namespace Automattic_Unit\Human_Testable_Helpers\Fakes;
 
 require_once( TESTED_LIBRARY_PATH . DIRECTORY_SEPARATOR . 'data-sources' . DIRECTORY_SEPARATOR . 'class.data-source.php' );
 require_once( TESTED_LIBRARY_PATH . DIRECTORY_SEPARATOR . 'test-items' . DIRECTORY_SEPARATOR . 'class.jetpack-test-item.php' );
+require_once( TESTED_LIBRARY_PATH . DIRECTORY_SEPARATOR . 'env' . DIRECTORY_SEPARATOR . 'class.environment.php' );
+require_once( TESTED_LIBRARY_PATH . DIRECTORY_SEPARATOR . 'env' . DIRECTORY_SEPARATOR . 'class.environment-history.php' );
+require_once( TESTED_LIBRARY_PATH . DIRECTORY_SEPARATOR . 'utils' . DIRECTORY_SEPARATOR . 'class.version-helper.php' );
 
 use Automattic\Human_Testable\Test_Items\Jetpack_Test_Item;
 use Automattic\Human_Testable\Data_Sources\Data_Source;
+use Automattic\Human_Testable\Env\Environment;
+use Automattic\Human_Testable\Env\Environment_History;
+use Automattic\Human_Testable\Utils\Version_Helper;
 
 define( 'FAKE_DATA_DIR', __DIR__ . DIRECTORY_SEPARATOR . 'data' );
 
@@ -32,23 +38,10 @@ class Test_Data_Source extends Data_Source {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function get_environment_attributes() {
-		return array(
-			'browser',
-			'host',
-			'jp_version',
-			'wp_version',
-			'php_version',
-		);
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
 	public function get_tests() {
 		$tests = [];
 		foreach ( $this->memory_tables['jetpack_test_items'] as $row ) {
-			$test_item = $this->prepare( $row );
+			$test_item = $this->generate_test_item( $row );
 			$tests[ $test_item->get_id() ] = $test_item;
 		}
 		return $tests;
@@ -65,27 +58,52 @@ class Test_Data_Source extends Data_Source {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function get_completed_tests( $site_id, $environment_hash ) {
-		$tests = [];
-		$site_id = (int) $site_id;
-		foreach ( $this->memory_tables['jetpack_test_items_completed'] as $item ) {
-			if ( $site_id === $item['site_id'] && $environment_hash === $item['environment'] ) {
-				$tests[] = $item['jetpack_test_item_id'];
-			}
-		}
-		return $tests;
+	public function get_environment_set( $site_id, array $environment ) {
+		$environment = $this->generate_environment( $environment );
+		return $this->load_completed_tests( $site_id, new Environment_History( $environment ) );
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function save_completed_test( $site_id, $test_id, $environment_hash ) {
+	public function load_completed_tests( $site_id, Environment_History $environment_set ) {
+		foreach ( $this->memory_tables['jetpack_test_items_completed'] as $test ) {
+			if ( $test['site_id'] != $site_id ) { continue; }
+			$environment_set->load_completed_test( (int) $test['jetpack_test_item_id'], $this->generate_environment( $test ) );
+		}
+		return $environment_set;
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function save_completed_test( $site_id, $test_id, Environment $environment ) {
 		$this->memory_tables['jetpack_test_items_completed'][] = array(
 			'site_id' => (int)$site_id,
 			'jetpack_test_item_id' => (int)$test_id,
-			'environment' => $environment_hash
+			'browser' => $environment['browser'],
+			'host' => $environment['host'],
+			'jp_version' => $environment['jp_version'],
+			'php_version' => $environment['php_version'],
+			'wp_version' => $environment['wp_version'],
+
 		);
 		return true;
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function generate_environment( array $environment ) {
+		$env = array();
+		$env['jp_version'] = isset( $environment['jp_version'] ) ? $environment['jp_version'] : null;
+		$env['jp_major_version_search'] = Version_Helper::get_major_version( $env['jp_version'] );
+		$env['php_version'] = isset( $environment['php_version'] ) ? $environment['php_version'] : null;
+		$env['wp_version'] = isset( $environment['wp_version'] ) ? $environment['wp_version'] : null;
+		$env['browser'] = isset( $environment['browser'] ) ? $environment['browser'] : null;
+		$env['host'] = isset( $environment['host'] ) ? $environment['host'] : null;
+
+		return new Environment( $env );
 	}
 
 	/**

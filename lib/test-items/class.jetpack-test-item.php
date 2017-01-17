@@ -2,9 +2,11 @@
 namespace Automattic\Human_Testable\Test_Items;
 
 require_once( __DIR__ . DIRECTORY_SEPARATOR . 'class.test-item.php' );
-require_once( dirname( __DIR__ ) . DIRECTORY_SEPARATOR . 'utils' . DIRECTORY_SEPARATOR . 'class.semver-helper.php' );
+require_once( dirname( __DIR__ ) . DIRECTORY_SEPARATOR . 'utils' . DIRECTORY_SEPARATOR . 'class.version-helper.php' );
+require_once( dirname( __DIR__ ) . DIRECTORY_SEPARATOR . 'env' . DIRECTORY_SEPARATOR . 'class.environment-history.php' );
 
-use Automattic\Human_Testable\Utils\Semver_Helper;
+use Automattic\Human_Testable\Env\Environment_History;
+use Automattic\Human_Testable\Utils\Version_Helper;
 
 /**
  * Class for a Jetpack test item
@@ -57,11 +59,12 @@ class Jetpack_Test_Item extends Test_Item {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function test_environment( $environment ) {
-		if ( ! parent::test_environment( $environment ) ) {
+	public function check_environment( Environment_History $environment_set ) {
+		if ( ! parent::check_environment( $environment_set ) ) {
 			return false;
 		}
-		if ( isset( $environment['jp_version'] ) && ! $this->test_importance( $environment ) ) {
+		$environment = $environment_set->get_current_environment();
+		if ( isset( $environment['jp_version'] ) && ! $this->check_importance( $environment_set ) ) {
 			return false;
 		}
 		if ( isset( $this->attributes['host'] )
@@ -75,21 +78,22 @@ class Jetpack_Test_Item extends Test_Item {
 		return true;
 	}
 
-	/**
-	 * Check if a test item should be returned based on its importance
-	 *
-	 * @param  array $environment Current environment.
-	 * @return bool               Test result.
-	 */
-	protected function test_importance( $environment ) {
+    /**
+     * Check if a test item should be returned based on its importance
+     *
+     * @param Environment_History $environment_set Current loaded environment.
+     * @return bool Test result.
+     */
+	protected function check_importance( Environment_History $environment_set ) {
+		$environment = $environment_set->get_current_environment();
 		if ( ! isset( $this->attributes['importance'] ) || 10 === $this->attributes['importance'] ) {
 			return true;
 		}
-		if ( $this->did_module_change( $environment ) ) {
+		if ( $this->did_module_change( $environment_set ) ) {
 			return true;
 		}
 		if ( 5 === $this->attributes['importance']
-				&& Semver_Helper::is_major_release( $environment['jp_version'] ) ) {
+				&& Version_Helper::is_major_release( $environment['jp_version'] ) ) {
 			return true;
 		}
 		return false;
@@ -98,14 +102,15 @@ class Jetpack_Test_Item extends Test_Item {
 	/**
 	 * Check if a module changed in a version release
 	 *
-	 * @param  array $environment Current environment.
-	 * @return bool               Test result.
+	 * @param  Environment_History $environment_set Current loaded environment set.
+	 * @return bool            Test result.
 	 * @todo
 	 */
-	protected function did_module_change( $environment ) {
+	protected function did_module_change( Environment_History $environment_set ) {
+		$environment = $environment_set->get_current_environment();
 		$version_modules = $this->data_source->get_version_modules();
 		$module = $this->get_module();
-		$version = Semver_Helper::normalize_version( $environment['jp_version'], true );
+		$version = Version_Helper::normalize_version( $environment['jp_version'], true );
 		if ( ! isset( $version )
 				|| ! isset( $module )
 				|| ! isset( $version_modules[ $version ] )

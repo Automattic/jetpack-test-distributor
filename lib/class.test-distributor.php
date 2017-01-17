@@ -2,7 +2,6 @@
 namespace Automattic\Human_Testable;
 
 require_once( __DIR__ . DIRECTORY_SEPARATOR . 'data-sources' . DIRECTORY_SEPARATOR . 'class.data-source.php' );
-require_once( __DIR__ . DIRECTORY_SEPARATOR . 'class.environment.php' );
 
 use Automattic\Human_Testable\Data_Sources\Data_Source;
 
@@ -32,13 +31,9 @@ class Test_Distributor {
 	 */
 	public function get_tests( $site_id, $environment ) {
 		$tests = array();
-		$environment = new Environment( $this->data_source->get_environment_attributes(), $environment );
-		$completed_tests = $this->data_source->get_completed_tests( $site_id, $environment->get_hash() );
+		$environment_set = $this->data_source->get_environment_set( $site_id, $environment );
 		foreach ( $this->data_source->get_tests() as $test_id => $test_item ) {
-			if ( in_array( $test_id, $completed_tests, true ) ) {
-				continue;
-			}
-			if ( ! $test_item->test_environment( $environment ) ) {
+			if ( ! $test_item->check_environment( $environment_set ) ) {
 				continue;
 			}
 			$tests[ $test_id ] = $test_item->get_package();
@@ -51,11 +46,11 @@ class Test_Distributor {
 	 *
 	 * @param  int   $site_id     Site ID.
 	 * @param  int   $test_id     Test ID.
-	 * @param  array $environment Array of the environment.
+	 * @param  array $environment Array of the current environment.
 	 * @return array	List of tests.
 	 */
 	public function mark_test_completed( $site_id, $test_id, $environment ) {
-		$environment = new Environment( $this->data_source->get_environment_attributes(), $environment );
-		return $this->data_source->save_completed_test( $site_id, $test_id, $environment->get_hash() );
+		$environment = $this->data_source->generate_environment( $environment );
+		return $this->data_source->save_completed_test( $site_id, $test_id, $environment );
 	}
 }
