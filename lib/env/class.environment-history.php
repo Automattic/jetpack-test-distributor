@@ -7,7 +7,7 @@ class Environment_History {
 	/**
 	 * Completed environments grouped by test ID
 	 *
-	 * @var Environment[]
+	 * @var array
 	 */
 	private $completed_test_environments = array();
 
