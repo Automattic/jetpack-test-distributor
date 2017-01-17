@@ -4,14 +4,14 @@ namespace Automattic\Human_Testable\Data_Sources;
 require_once( __DIR__ . DIRECTORY_SEPARATOR . 'class.data-source.php' );
 require_once( dirname( __DIR__ ) . DIRECTORY_SEPARATOR . 'test-items' . DIRECTORY_SEPARATOR . 'class.jetpack-test-item.php' );
 require_once( dirname( __DIR__ ) . DIRECTORY_SEPARATOR . 'env' . DIRECTORY_SEPARATOR . 'class.environment.php' );
-require_once( dirname( __DIR__ ) . DIRECTORY_SEPARATOR . 'env' . DIRECTORY_SEPARATOR . 'class.environment-set.php' );
+require_once( dirname( __DIR__ ) . DIRECTORY_SEPARATOR . 'env' . DIRECTORY_SEPARATOR . 'class.environment-history.php' );
 require_once( dirname( __DIR__ ) . DIRECTORY_SEPARATOR . 'utils' . DIRECTORY_SEPARATOR . 'class.version-helper.php' );
 
 use PDO;
 use Automattic\Human_Testable\Test_Items\Jetpack_Test_Item;
 use Automattic\Human_Testable\Utils\Version_Helper;
 use Automattic\Human_Testable\Env\Environment;
-use Automattic\Human_Testable\Env\Environment_Set;
+use Automattic\Human_Testable\Env\Environment_History;
 
 /**
  * Jetpack PDO class for a data source
@@ -41,7 +41,7 @@ class PDO_Jetpack_Data_Source extends Data_Source {
 	 */
 	public function get_environment_set( $site_id, array $environment ) {
 		$environment = $this->generate_environment( $environment );
-		return $this->load_completed_tests( $site_id, new Environment_Set( $environment ) );
+		return $this->load_completed_tests( $site_id, new Environment_History( $environment ) );
 	}
 
 	/**
@@ -90,10 +90,10 @@ class PDO_Jetpack_Data_Source extends Data_Source {
 	 * Loads the environment set
 	 *
 	 * @param  int             $site_id         Current site ID
-	 * @param  Environment_Set $environment_set Loaded current environment set
-	 * @return Environment_Set Same environment set
+	 * @param  Environment_History $environment_set Loaded current environment set
+	 * @return Environment_History Same environment set
 	 */
-	public function load_completed_tests( $site_id, Environment_Set $environment_set ) {
+	public function load_completed_tests( $site_id, Environment_History $environment_set ) {
 		$current_environment = $environment_set->get_current_environment();
 		$query_params = array( ':site_id' => $site_id );
 		$query_str = 'SELECT `jtic`.* FROM `jetpack_test_items_completed` `jtic` WHERE `jtic`.`site_id`=:site_id';

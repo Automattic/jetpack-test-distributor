@@ -2,10 +2,10 @@
 namespace Automattic\Human_Testable\Data_Sources;
 
 require_once( dirname( __DIR__ ) . DIRECTORY_SEPARATOR . 'env' . DIRECTORY_SEPARATOR . 'class.environment.php' );
-require_once( dirname( __DIR__ ) . DIRECTORY_SEPARATOR . 'env' . DIRECTORY_SEPARATOR . 'class.environment-set.php' );
+require_once( dirname( __DIR__ ) . DIRECTORY_SEPARATOR . 'env' . DIRECTORY_SEPARATOR . 'class.environment-history.php' );
 
 use Automattic\Human_Testable\Env\Environment;
-use Automattic\Human_Testable\Env\Environment_Set;
+use Automattic\Human_Testable\Env\Environment_History;
 
 /**
  * Abstract class for a data source
@@ -42,7 +42,7 @@ abstract class Data_Source {
 	 *
 	 * @param  int   $site_id     Site ID for the current site.
 	 * @param  array $environment Array containing current environment's attributes
-	 * @return Environment_Set
+	 * @return Environment_History
 	 */
 	abstract public function get_environment_set( $site_id, array $environment );
 

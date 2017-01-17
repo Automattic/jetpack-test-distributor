@@ -3,9 +3,9 @@ namespace Automattic\Human_Testable\Test_Items;
 
 require_once( dirname( __DIR__ ) . DIRECTORY_SEPARATOR . 'utils' . DIRECTORY_SEPARATOR . 'class.version-helper.php' );
 require_once( dirname( __DIR__ ) . DIRECTORY_SEPARATOR . 'data-sources' . DIRECTORY_SEPARATOR . 'class.data-source.php' );
-require_once( dirname( __DIR__ ) . DIRECTORY_SEPARATOR . 'env' . DIRECTORY_SEPARATOR . 'class.environment-set.php' );
+require_once( dirname( __DIR__ ) . DIRECTORY_SEPARATOR . 'env' . DIRECTORY_SEPARATOR . 'class.environment-history.php' );
 
-use Automattic\Human_Testable\Env\Environment_Set;
+use Automattic\Human_Testable\Env\Environment_History;
 use Automattic\Human_Testable\Data_Sources\Data_Source;
 use Automattic\Human_Testable\Utils\Version_Helper;
 
@@ -70,10 +70,10 @@ abstract class Test_Item {
 	/**
 	 * Tests the environment for a match with the test item
 	 *
-	 * @param  Environment_Set $environment_set Current environment set.
+	 * @param  Environment_History $environment_set Current environment set.
 	 * @return bool Test result
 	 */
-	public function check_environment( Environment_Set $environment_set ) {
+	public function check_environment( Environment_History $environment_set ) {
 		if ( $environment_set->match( $this->get_id() ) ) {
 			return false;
 		}

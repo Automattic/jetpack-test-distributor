@@ -3,7 +3,7 @@ namespace Automattic\Human_Testable\Env;
 
 require_once( __DIR__ . DIRECTORY_SEPARATOR . 'class.environment.php' );
 
-class Environment_Set {
+class Environment_History {
 	/**
 	 * Completed environments grouped by test ID
 	 *

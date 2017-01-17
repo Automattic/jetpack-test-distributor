@@ -4,13 +4,13 @@ namespace Automattic_Unit\Human_Testable_Helpers\Fakes;
 require_once( TESTED_LIBRARY_PATH . DIRECTORY_SEPARATOR . 'data-sources' . DIRECTORY_SEPARATOR . 'class.data-source.php' );
 require_once( TESTED_LIBRARY_PATH . DIRECTORY_SEPARATOR . 'test-items' . DIRECTORY_SEPARATOR . 'class.jetpack-test-item.php' );
 require_once( TESTED_LIBRARY_PATH . DIRECTORY_SEPARATOR . 'env' . DIRECTORY_SEPARATOR . 'class.environment.php' );
-require_once( TESTED_LIBRARY_PATH . DIRECTORY_SEPARATOR . 'env' . DIRECTORY_SEPARATOR . 'class.environment-set.php' );
+require_once( TESTED_LIBRARY_PATH . DIRECTORY_SEPARATOR . 'env' . DIRECTORY_SEPARATOR . 'class.environment-history.php' );
 require_once( TESTED_LIBRARY_PATH . DIRECTORY_SEPARATOR . 'utils' . DIRECTORY_SEPARATOR . 'class.version-helper.php' );
 
 use Automattic\Human_Testable\Test_Items\Jetpack_Test_Item;
 use Automattic\Human_Testable\Data_Sources\Data_Source;
 use Automattic\Human_Testable\Env\Environment;
-use Automattic\Human_Testable\Env\Environment_Set;
+use Automattic\Human_Testable\Env\Environment_History;
 use Automattic\Human_Testable\Utils\Version_Helper;
 
 define( 'FAKE_DATA_DIR', __DIR__ . DIRECTORY_SEPARATOR . 'data' );
@@ -60,13 +60,13 @@ class Test_Data_Source extends Data_Source {
 	 */
 	public function get_environment_set( $site_id, array $environment ) {
 		$environment = $this->generate_environment( $environment );
-		return $this->load_completed_tests( $site_id, new Environment_Set( $environment ) );
+		return $this->load_completed_tests( $site_id, new Environment_History( $environment ) );
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function load_completed_tests( $site_id, Environment_Set $environment_set ) {
+	public function load_completed_tests( $site_id, Environment_History $environment_set ) {
 		foreach ( $this->memory_tables['jetpack_test_items_completed'] as $test ) {
 			if ( $test['site_id'] != $site_id ) { continue; }
 			$environment_set->load_completed_test( (int) $test['jetpack_test_item_id'], $this->generate_environment( $test ) );

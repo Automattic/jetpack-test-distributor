@@ -4,10 +4,10 @@ namespace Automattic_Unit\Human_Testable\Data_Sources;
 require_once( dirname( __DIR__ ) . DIRECTORY_SEPARATOR . 'test_class.base-test.php' );
 require_once( TESTED_LIBRARY_PATH . DIRECTORY_SEPARATOR . 'data-sources' . DIRECTORY_SEPARATOR . 'class.pdo-jetpack-data-source.php' );
 require_once( TESTED_LIBRARY_PATH . DIRECTORY_SEPARATOR . 'env' . DIRECTORY_SEPARATOR . 'class.environment.php' );
-require_once( TESTED_LIBRARY_PATH . DIRECTORY_SEPARATOR . 'env' . DIRECTORY_SEPARATOR . 'class.environment-set.php' );
+require_once( TESTED_LIBRARY_PATH . DIRECTORY_SEPARATOR . 'env' . DIRECTORY_SEPARATOR . 'class.environment-history.php' );
 
 use Automattic\Human_Testable\Env\Environment;
-use Automattic\Human_Testable\Env\Environment_Set;
+use Automattic\Human_Testable\Env\Environment_History;
 use Automattic\Human_Testable\Data_Sources\PDO_Jetpack_Data_Source;
 use Automattic_Unit\Human_Testable\Base_Test;
 
