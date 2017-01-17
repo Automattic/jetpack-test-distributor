@@ -73,7 +73,7 @@ abstract class Test_Item {
 	 * @param  Environment_Set $environment_set Current environment set.
 	 * @return bool Test result
 	 */
-	public function test_environment( Environment_Set $environment_set ) {
+	public function check_environment( Environment_Set $environment_set ) {
 		if ( $environment_set->match( $this->get_id() ) ) {
 			return false;
 		}

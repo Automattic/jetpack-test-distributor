@@ -50,9 +50,9 @@ class Test_Jetpack_Test_Item extends Base_Test {
 
 	public function test_did_module_change() {
 		$item = $this->get_jetpack_test_item( array( 'importance' => 5, 'module' => 'comments' ) );
-		$this->assertTrue( $item->test_environment( $this->fill_environment( array( 'jp_version' => '4.6.0' ) ) ) );
-		$this->assertFalse( $item->test_environment( $this->fill_environment( array( 'jp_version' => '4.5.9' ) ) ) );
-		$this->assertFalse( $item->test_environment( $this->fill_environment( array( 'jp_version' => '4.5.8' ) ) ) );
+		$this->assertTrue( $item->check_environment( $this->fill_environment( array( 'jp_version' => '4.6.0' ) ) ) );
+		$this->assertFalse( $item->check_environment( $this->fill_environment( array( 'jp_version' => '4.5.9' ) ) ) );
+		$this->assertFalse( $item->check_environment( $this->fill_environment( array( 'jp_version' => '4.5.8' ) ) ) );
 	}
 
 	protected function fill_environment( $environment, $site_id = 1 ) {

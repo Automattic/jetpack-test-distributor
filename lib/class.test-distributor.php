@@ -33,7 +33,7 @@ class Test_Distributor {
 		$tests = array();
 		$environment_set = $this->data_source->get_environment_set( $site_id, $environment );
 		foreach ( $this->data_source->get_tests() as $test_id => $test_item ) {
-			if ( ! $test_item->test_environment( $environment_set ) ) {
+			if ( ! $test_item->check_environment( $environment_set ) ) {
 				continue;
 			}
 			$tests[ $test_id ] = $test_item->get_package();
